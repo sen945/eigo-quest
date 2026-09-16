@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#6c4bdc">
+<meta name="apple-mobile-web-app-capable" content="no">
+<meta name="mobile-web-app-capable" content="no">
+<meta name="apple-mobile-web-app-title" content="Eigo Quest">
+<!-- This is a normal web site; do not provide PWA standalone metadata. -->
 <title>中学英語 完全学習サイト</title>
 <style>
 :root{--p:#6c4bdc;--bg:#f5f2ff;--ink:#28233b;--muted:#746e83}
@@ -12,14 +16,14 @@
 .panel{background:#fff;border:1px solid #e8e2f3;border-radius:22px;padding:14px;box-shadow:0 12px 35px #493b8012;margin-bottom:12px}
 nav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:12px 0}nav button{background:#eeeafb}nav button.active{background:var(--p);color:white}
 button,select,input{font:inherit;border:0;border-radius:13px;padding:12px}button{font-weight:700;cursor:pointer;background:#eeeafb;color:#302a45}button.primary{background:var(--p);color:white}
-select,input{background:#f3f0fa;color:#302a45;width:100%}.controls{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+select,input{background:#f3f0fa;color:#302a45;width:100%}.controls{display:grid;grid-template-columns:1fr 1fr;gap:8px}.controls3{grid-template-columns:repeat(3,1fr)}@media(max-width:520px){.controls3{grid-template-columns:1fr 1fr}.controls3 select:first-child{grid-column:1/-1}}
 .stats{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin:9px 2px}
 .card{min-height:340px;border:2px solid #e5ddfb;border-radius:24px;background:linear-gradient(145deg,#fff,#f6f2ff);display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;position:relative;cursor:pointer}
 .tag{position:absolute;top:14px;left:14px;background:#ebe5ff;color:#5b42b2;border-radius:99px;padding:6px 9px;font-size:11px}.pic{font-size:52px;margin-bottom:10px}.word{font-size:38px;font-weight:850;overflow-wrap:anywhere}.meaning{font-size:22px;font-weight:750;margin-top:12px}.reading{font-size:15px;color:var(--muted);margin-top:7px}.hint{font-size:13px;color:#8b8594;margin-top:12px}
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.actions3{grid-template-columns:1fr 1fr 1fr}.good{background:#e8f7ee;color:#18723c}.bad{background:#fff0f0;color:#a43d3d}
-.auto{background:#f7f4ff;border:1px solid #e7def8;border-radius:15px;padding:11px;margin-top:10px}.autorow{display:flex;align-items:center;justify-content:space-between;gap:10px}.auto small{color:var(--muted)}.auto input{padding:0;accent-color:var(--p)}
+.auto{background:#f7f4ff;border:1px solid #e7def8;border-radius:15px;padding:11px;margin-top:10px}.autorow{display:flex;align-items:center;justify-content:space-between;gap:10px}.auto small{color:var(--muted)}.auto input{padding:0;accent-color:var(--p)}.autoSpeedRow{margin-top:9px}.autoSpeedRow label{font-size:12px;font-weight:800;color:var(--muted)}.autoSpeedRow select{width:auto;margin-left:6px;padding:7px 10px}
 .progress{height:8px;background:#e9e5ef;border-radius:99px;overflow:hidden;margin-top:11px}.bar{height:100%;width:0;background:var(--p)}
-.hidden{display:none!important}.q{font-size:24px;font-weight:800;text-align:center;padding:25px 10px 15px}.choices{display:grid;grid-template-columns:1fr 1fr;gap:9px}.choices button{text-align:left;background:#f3f0fa}.choices button.correct{background:#dff5e7;color:#176b37}.choices button.wrong{background:#ffe2e2;color:#a22f2f}
+.hidden{display:none!important}.settingsgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.settingsItem{background:#f7f4ff;border:1px solid #e7def8;border-radius:15px;padding:12px}.settingsItem label{display:block;font-size:12px;font-weight:800;color:var(--muted);margin-bottom:6px}.settingsItem input,.settingsItem select{margin-top:4px}.speedQuick{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}.speedQuick button{padding:8px 5px;font-size:12px}.settingsNote{font-size:12px;color:var(--muted);line-height:1.6;margin-top:10px}.settingsActions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}@media(max-width:520px){.settingsgrid{grid-template-columns:1fr}}.q{font-size:24px;font-weight:800;text-align:center;padding:25px 10px 15px}.choices{display:grid;grid-template-columns:1fr 1fr;gap:9px}.choices button{text-align:left;background:#f3f0fa}.choices button.correct{background:#dff5e7;color:#176b37}.choices button.wrong{background:#ffe2e2;color:#a22f2f}
 .result{text-align:center;padding:25px}.scorebig{font-size:50px;font-weight:900;color:var(--p)}.small{font-size:12px;color:var(--muted);line-height:1.6}
 @media(max-width:430px){.word{font-size:32px}.card{min-height:315px}}
 
@@ -46,14 +50,17 @@ select,input{background:#f3f0fa;color:#302a45;width:100%}.controls{display:grid;
 <button id="tabTyping">⌨️ タイピング</button>
 <button id="tabTest">📝 テスト</button>
 <button id="tabGoal">🎯 目標</button>
+<button id="tabSettings">⚙️ 設定</button>
 </nav>
 <div class="subnav"><button id="tabProgress">📊 進捗</button></div>
 
 <section id="study" class="panel">
-<div class="controls">
+<div class="controls controls3">
+<select id="grade"><option value="all">中1〜中3・すべて</option><option value="1">中1</option><option value="2">中2</option><option value="3">中3</option></select>
 <select id="kind"><option value="all">単語＋熟語</option><option value="word">単語だけ</option><option value="phrase">熟語・表現だけ</option></select>
 <select id="order"><option value="random">ランダム</option><option value="weak">苦手優先</option><option value="new">未学習優先</option></select>
 </div>
+<div class="small" style="margin-top:7px">📌 出題範囲を「中1・中2・中3・すべて」から選べます。選んだ学年のカードだけが暗記に出ます。</div>
 <div class="stats"><span id="count">読み込み中…</span><span id="score"></span></div>
 <div id="card" class="card"><div><div class="pic">📖</div><div class="word">読み込み中</div></div></div>
 <div class="progress"><div id="bar" class="bar"></div></div>
@@ -61,7 +68,7 @@ select,input{background:#f3f0fa;color:#302a45;width:100%}.controls{display:grid;
 <div class="actions actions3"><button class="good" id="remember">覚えた ✓</button><button class="bad" id="again">もう一回</button><button id="next">次へ →</button></div>
 <div class="auto">
 <div class="autorow"><b>自動で英単語を流す</b><button id="autoBtn">▶ ON</button></div>
-<div style="margin-top:8px"><small>速度：<span id="speedText">3秒</span></small><input id="speed" type="range" min="1" max="10" value="3"></div>
+<div class="small" style="margin-top:7px">自動で次の単語へ進む間隔を選べます。</div><div class="autoSpeedRow"><label>流す速度：<select id="speed"><option value="0.5">0.5秒</option><option value="1">1秒</option><option value="2">2秒</option><option value="3" selected>3秒</option><option value="5">5秒</option><option value="10">10秒</option></select></label></div>
 </div>
 </section>
 
@@ -89,7 +96,8 @@ select,input{background:#f3f0fa;color:#302a45;width:100%}.controls{display:grid;
 <section id="typing" class="panel hidden">
 <h2>⌨️ 日本語 → 英語タイピング</h2>
 <div class="small">日本語の意味を見て、英語を入力。熟語・表現はひとまとまりで出題します。</div>
-<div class="controls" style="margin-top:10px">
+<div class="controls controls3" style="margin-top:10px">
+<select id="typingGrade"><option value="all">中1〜中3・すべて</option><option value="1">中1</option><option value="2">中2</option><option value="3">中3</option></select>
 <select id="typingKind"><option value="word">単語</option><option value="phrase">熟語・表現</option><option value="all">単語＋熟語</option></select>
 <select id="typingOrder"><option value="random">ランダム</option><option value="weak">苦手優先</option></select>
 </div>
@@ -97,6 +105,7 @@ select,input{background:#f3f0fa;color:#302a45;width:100%}.controls{display:grid;
 </section>
 
 <section id="test" class="panel hidden">
+<div class="controls" style="margin-bottom:10px"><select id="testGrade"><option value="all">出題範囲：中1〜中3・すべて</option><option value="1">出題範囲：中1</option><option value="2">出題範囲：中2</option><option value="3">出題範囲：中3</option></select></div>
 <div class="stats"><span id="testNo">10問テスト</span><span id="testScore">0点</span></div>
 <div id="testBody"></div>
 </section>
@@ -115,6 +124,20 @@ select,input{background:#f3f0fa;color:#302a45;width:100%}.controls{display:grid;
 <button class="primary" id="generateGoal" style="width:100%;margin-top:10px">🚀 この条件で学習クエストを生成</button>
 </div>
 <div id="goalPlan"></div>
+</section>
+
+<section id="settings" class="panel hidden">
+<h2>⚙️ 設定・カスタマイズ</h2>
+<div class="small">サイトの見た目、文字サイズ、読み上げ、音声速度などを自分好みに変更できます。設定はこの端末のブラウザに保存されます。</div>
+<div class="settingsgrid" style="margin-top:12px">
+<div class="settingsItem"><label>🎨 アクセントカラー</label><select id="accentSetting"><option value="#6c4bdc">パープル</option><option value="#3578e5">ブルー</option><option value="#0b8f87">ティール</option><option value="#d06aa5">ピンク</option><option value="#e28a2b">オレンジ</option></select></div>
+<div class="settingsItem"><label>🌙 表示テーマ</label><select id="themeSetting"><option value="system">端末に合わせる</option><option value="light">ライト</option><option value="dark">ダーク</option></select></div>
+<div class="settingsItem"><label>🔤 文字サイズ</label><select id="fontSetting"><option value="1">標準</option><option value="1.08">少し大きく</option><option value="1.16">大きく</option></select></div>
+<div class="settingsItem"><label>🔊 読み上げる声</label><select id="voiceSelect"><option value="">標準音声</option></select></div>
+<div class="settingsItem"><label>🗣️ 音声速度：<span id="voiceRateText">0.82</span></label><input id="voiceRate" type="range" min="0.5" max="1.3" step="0.05" value="0.82"><div class="small">小さいほどゆっくり、大きいほど速く読み上げます。</div></div>
+</div>
+<div class="settingsActions"><button id="resetSettings">設定を初期状態に戻す</button><button class="bad" id="resetAllFromSettings">学習データをリセット</button></div>
+<div class="settingsNote">※ iPhoneのSafariなどで選べる音声は、端末にインストールされている音声によって異なります。サイト側から新しい音声を追加することはできません。</div>
 </section>
 
 <section id="progress" class="panel hidden">
@@ -153,8 +176,8 @@ function pic(c){
  return c.kind==="phrase"?"💬":"🔤";
 }
 function rebuild(){
- const k=$("kind").value,ord=$("order").value;
- let a=all.filter(c=>k==="all"||c.kind===k);
+ const k=$("kind").value,ord=$("order").value,gr=$("grade").value;
+ let a=all.filter(c=>(gr==="all"||String(c.grade)===gr)&&(k==="all"||c.kind===k));
  if(ord==="weak") a.sort((x,y)=>(learned[key(x)]||0)-(learned[key(y)]||0));
  else if(ord==="new") a.sort((x,y)=>Number(!!learned[key(x)])-Number(!!learned[key(y)]));
  else a=shuffle(a);
@@ -205,10 +228,33 @@ function render(){
 function esc(s){return String(s).replace(/[&<>"]/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[x]))}
 function flip(){flipped=!flipped;render()}
 function next(){if(!deck.length)return;idx=(idx+1)%deck.length;flipped=false;render()}
+let voices=[];
+let selectedVoiceName=localStorage.getItem("jhs_voice_name")||"";
+let voiceRate=Number(localStorage.getItem("jhs_voice_rate")||"0.82");
+function loadVoices(){
+ if(!('speechSynthesis' in window))return;
+ voices=speechSynthesis.getVoices().filter(v=>/^en(-|_|$)/i.test(v.lang));
+ const sel=$("voiceSelect");
+ if(!sel)return;
+ const current=selectedVoiceName;
+ sel.innerHTML='<option value="">標準音声</option>';
+ voices.forEach(v=>{
+   const o=document.createElement('option'); o.value=v.name;
+   o.textContent=v.name+' ('+v.lang+')'; sel.appendChild(o);
+ });
+ sel.value=voices.some(v=>v.name===current)?current:"";
+}
 function speak(){
- if(!deck.length)return;
- const u=new SpeechSynthesisUtterance(deck[idx].en);u.lang="en-US";u.rate=.82;
+ if(!deck.length || !('speechSynthesis' in window))return;
+ const u=new SpeechSynthesisUtterance(deck[idx].en);
+ u.lang="en-US";u.rate=voiceRate;
+ const v=voices.find(x=>x.name===selectedVoiceName);
+ if(v){u.voice=v;u.lang=v.lang;}
  speechSynthesis.cancel();speechSynthesis.speak(u);
+}
+if('speechSynthesis' in window){
+ speechSynthesis.onvoiceschanged=loadVoices;
+ setTimeout(loadVoices,300);
 }
 function restartAuto(){
  clearInterval(autoTimer);
@@ -219,11 +265,35 @@ $("kind").onchange=rebuild;$("order").onchange=rebuild;$("flip").onclick=flip;$(
 $("again").onclick=()=>{flipped=false;render()};
 $("remember").onclick=()=>{if(!deck.length)return;learned[key(deck[idx])]=Math.min(5,(learned[key(deck[idx])]||0)+1);localStorage.setItem("jhs_learned_v2",JSON.stringify(learned));next();};
 $("autoBtn").onclick=()=>{autoOn=!autoOn;$("autoBtn").textContent=autoOn?"⏸ OFF":"▶ ON";restartAuto()};
-$("speed").oninput=()=>{$("speedText").textContent=$("speed").value+"秒";restartAuto()};
+function setAutoSpeed(v){v=String(v);localStorage.setItem("jhs_auto_speed",v);if($("speed"))$("speed").value=v;restartAuto()}
+$("voiceSelect").onchange=()=>{selectedVoiceName=$("voiceSelect").value;localStorage.setItem("jhs_voice_name",selectedVoiceName);speak()};
+$("voiceRate").value=voiceRate;$("voiceRateText").textContent=voiceRate.toFixed(2);
+$("voiceRate").oninput=()=>{voiceRate=Number($("voiceRate").value);$("voiceRateText").textContent=voiceRate.toFixed(2);localStorage.setItem("jhs_voice_rate",String(voiceRate))};
+const DEFAULT_SETTINGS={accent:"#6c4bdc",theme:"system",font:"1",voiceRate:"0.82",voiceName:""};
+function applySettings(){
+ const st={accent:localStorage.getItem("jhs_accent")||DEFAULT_SETTINGS.accent,theme:localStorage.getItem("jhs_theme")||DEFAULT_SETTINGS.theme,font:localStorage.getItem("jhs_font")||DEFAULT_SETTINGS.font};
+ document.documentElement.style.setProperty("--p",st.accent);
+ document.documentElement.style.fontSize=st.font+"em";
+ document.body.dataset.theme=st.theme;
+ const dark=st.theme==="dark" || (st.theme==="system" && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+ document.body.style.background=dark?"linear-gradient(160deg,#15131c,#17202a)":"";
+ document.body.style.color=dark?"#eee":"";
+ ["accentSetting","themeSetting","fontSetting"].forEach(id=>{if($(id))$(id).value=st[id.replace("Setting","")]||st.font});
+
+}
+function saveSetting(k,v){localStorage.setItem(k,v);applySettings()}
+if($("speed"))$("speed").value=localStorage.getItem("jhs_auto_speed")||"3";
+$("speed").onchange=e=>setAutoSpeed(e.target.value);
+$("accentSetting").onchange=e=>saveSetting("jhs_accent",e.target.value);
+$("themeSetting").onchange=e=>saveSetting("jhs_theme",e.target.value);
+$("fontSetting").onchange=e=>saveSetting("jhs_font",e.target.value);
+$("resetSettings").onclick=()=>{if(!confirm("設定を初期状態に戻しますか？\n\n学習データは消えません。"))return;localStorage.setItem("jhs_accent",DEFAULT_SETTINGS.accent);localStorage.setItem("jhs_theme",DEFAULT_SETTINGS.theme);localStorage.setItem("jhs_font",DEFAULT_SETTINGS.font);localStorage.setItem("jhs_auto_speed","3");localStorage.setItem("jhs_voice_rate",DEFAULT_SETTINGS.voiceRate);localStorage.removeItem("jhs_voice_name");selectedVoiceName="";voiceRate=Number(DEFAULT_SETTINGS.voiceRate);if($("voiceRate")){$("voiceRate").value=DEFAULT_SETTINGS.voiceRate;$("voiceRateText").textContent=DEFAULT_SETTINGS.voiceRate;}loadVoices();applySettings();restartAuto()};
+$("resetAllFromSettings").onclick=()=>{if(!confirm("学習データをリセットしますか？\n\n覚えた記録・目標・クエスト達成記録などが消えます。\nこの操作は元に戻せません。"))return;learned={};localStorage.removeItem("jhs_learned_v2");localStorage.removeItem("jhs_goal_v2");localStorage.removeItem("jhs_tasks_v2");showProgress();render();alert("学習データをリセットしました。")};
+applySettings();
 
 function show(tab){
- ["study","forms","grammar","typing","test","goal","progress"].forEach(x=>$(x).classList.toggle("hidden",x!==tab));
- ["tabStudy","tabForms","tabGrammar","tabTyping","tabTest","tabGoal","tabProgress"].forEach(x=>$(x).classList.remove("active"));
+ ["study","forms","grammar","typing","test","goal","settings","progress"].forEach(x=>$(x).classList.toggle("hidden",x!==tab));
+ ["tabStudy","tabForms","tabGrammar","tabTyping","tabTest","tabGoal","tabSettings","tabProgress"].forEach(x=>$(x).classList.remove("active"));
  const id="tab"+tab[0].toUpperCase()+tab.slice(1);
  if($(id))$(id).classList.add("active");
  if(tab==="forms")startForms();
@@ -447,8 +517,8 @@ function answerGrammar(btn,i){
 let typingQ=null;
 function startTyping(){renderTyping()}
 function renderTyping(){
- const k=$("typingKind").value;
- let a=all.filter(c=>k==="all"||c.kind===k);
+ const k=$("typingKind").value,gr=$("typingGrade").value;
+ let a=all.filter(c=>(gr==="all"||String(c.grade)===gr)&&(k==="all"||c.kind===k));
  if(!a.length){$("typingBody").innerHTML="<div class='typingcard'>問題がありません。</div>";return}
  if($("typingOrder").value==="weak")a.sort((x,y)=>(learned["typing|"+x.en]||0)-(learned["typing|"+y.en]||0));else a=shuffle(a);
  typingQ=a[0];
@@ -468,10 +538,13 @@ function checkTyping(){
  setTimeout(renderTyping,1000);
 }
 $("grammarLevel").onchange=startGrammar;$("grammarTopic").onchange=startGrammar;
-$("typingKind").onchange=startTyping;$("typingOrder").onchange=startTyping;
+$("typingGrade").onchange=startTyping;$("typingKind").onchange=startTyping;$("typingOrder").onchange=startTyping;
+$("grade").onchange=rebuild;
 
 function startTest(){
- test={list:shuffle(all.filter(c=>c.kind==="word"||c.kind==="phrase")).slice(0,10),n:0,score:0,answered:false};
+ const gr=$("testGrade").value;
+ const pool=all.filter(c=>(gr==="all"||String(c.grade)===gr)&&(c.kind==="word"||c.kind==="phrase"));
+ test={list:shuffle(pool).slice(0,10),n:0,score:0,answered:false};
  renderQuestion();
 }
 function renderQuestion(){
@@ -579,7 +652,16 @@ $("generateGoal").onclick=generateGoal;
 function showProgress(){
  const total=all.length, done=Object.keys(learned).length;
  $("progressBody").innerHTML="<p>収録カード：<b>"+total+"+</b></p><p>覚えたカード：<b>"+done+"</b></p><p>語形トレーニング：<b>"+FORMS.length+"語</b></p><p>文法問題：<b>"+GRAMMAR.length+"問</b></p><p>日本語→英語タイピング：<b>収録カードを出題</b></p><p>進捗率：<b>"+(total?Math.min(100,Math.round(done/total*100)):0)+"%</b></p><button class='bad' id='resetProgress'>進捗をリセット</button>";
- $("resetProgress").onclick=()=>{if(confirm("進捗をリセットしますか？")){learned={};localStorage.removeItem("jhs_learned_v2");showProgress();render()}};
+ $("resetProgress").onclick=()=>{
+ const ok=confirm("⚠️ 学習データをリセットしますか？\n\n覚えた記録・目標クエストの達成記録などが消えます。\nこの操作は元に戻せません。\n\n本当にリセットしますか？");
+ if(!ok)return;
+ learned={};
+ localStorage.removeItem("jhs_learned_v2");
+ localStorage.removeItem("jhs_goal_v2");
+ localStorage.removeItem("jhs_tasks_v2");
+ showProgress();render();
+ alert("学習データをリセットしました。");
+};
  $("runAI").onclick=renderAI;
  renderAI();
 }
@@ -610,6 +692,9 @@ async function loadRemote(){
    console.log("online vocabulary loaded",extra.length);
  }catch(e){console.log("offline fallback")}
 }
+$("testGrade").onchange=startTest;
 rebuild();loadRemote();
+document.addEventListener("dblclick",e=>e.preventDefault(),{passive:false});
+document.addEventListener("touchend",function(e){const now=Date.now();if(window.__lastTouch && now-window.__lastTouch<300){e.preventDefault()}window.__lastTouch=now},{passive:false});
 </script>
 </body></html>
