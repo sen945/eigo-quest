@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#6c4bdc">
+<title>中学英語 完全学習サイト</title>
+<style>
+:root{--p:#6c4bdc;--bg:#f5f2ff;--ink:#28233b;--muted:#746e83}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(160deg,#f6f2ff,#edf6ff);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif}
+.app{max-width:720px;margin:auto;padding:18px 14px 44px}.hero{padding:8px 3px 14px}h1{font-size:25px;margin:0 0 4px}.sub{color:var(--muted);font-size:13px}
+.panel{background:#fff;border:1px solid #e8e2f3;border-radius:22px;padding:14px;box-shadow:0 12px 35px #493b8012;margin-bottom:12px}
+nav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:12px 0}nav button{background:#eeeafb}nav button.active{background:var(--p);color:white}
+button,select,input{font:inherit;border:0;border-radius:13px;padding:12px}button{font-weight:700;cursor:pointer;background:#eeeafb;color:#302a45}button.primary{background:var(--p);color:white}
+select,input{background:#f3f0fa;color:#302a45;width:100%}.controls{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stats{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin:9px 2px}
+.card{min-height:340px;border:2px solid #e5ddfb;border-radius:24px;background:linear-gradient(145deg,#fff,#f6f2ff);display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;position:relative;cursor:pointer}
+.tag{position:absolute;top:14px;left:14px;background:#ebe5ff;color:#5b42b2;border-radius:99px;padding:6px 9px;font-size:11px}.pic{font-size:52px;margin-bottom:10px}.word{font-size:38px;font-weight:850;overflow-wrap:anywhere}.meaning{font-size:22px;font-weight:750;margin-top:12px}.reading{font-size:15px;color:var(--muted);margin-top:7px}.hint{font-size:13px;color:#8b8594;margin-top:12px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.actions3{grid-template-columns:1fr 1fr 1fr}.good{background:#e8f7ee;color:#18723c}.bad{background:#fff0f0;color:#a43d3d}
+.auto{background:#f7f4ff;border:1px solid #e7def8;border-radius:15px;padding:11px;margin-top:10px}.autorow{display:flex;align-items:center;justify-content:space-between;gap:10px}.auto small{color:var(--muted)}.auto input{padding:0;accent-color:var(--p)}
+.progress{height:8px;background:#e9e5ef;border-radius:99px;overflow:hidden;margin-top:11px}.bar{height:100%;width:0;background:var(--p)}
+.hidden{display:none!important}.q{font-size:24px;font-weight:800;text-align:center;padding:25px 10px 15px}.choices{display:grid;grid-template-columns:1fr 1fr;gap:9px}.choices button{text-align:left;background:#f3f0fa}.choices button.correct{background:#dff5e7;color:#176b37}.choices button.wrong{background:#ffe2e2;color:#a22f2f}
+.result{text-align:center;padding:25px}.scorebig{font-size:50px;font-weight:900;color:var(--p)}.small{font-size:12px;color:var(--muted);line-height:1.6}
+@media(max-width:430px){.word{font-size:32px}.card{min-height:315px}}
+
+.tabs5{grid-template-columns:repeat(6,1fr)}
+.goalHero{background:linear-gradient(135deg,#6c4bdc,#8e6cf0);color:#fff;border-radius:22px;padding:16px;margin-bottom:12px;box-shadow:0 12px 30px #493b8030}.goalTitle{font-size:24px;font-weight:900}.goalMeta{font-size:13px;opacity:.92;margin-top:4px}.goalStats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.goalStat{background:#ffffff22;border:1px solid #ffffff30;border-radius:14px;padding:10px;text-align:center}.goalStat b{display:block;font-size:20px}.task{display:flex;gap:11px;align-items:flex-start;padding:12px;border:1px solid #e8e2f3;border-radius:16px;background:#fff;margin-top:9px}.task.done{opacity:.65;background:#f5f5f7}.taskCheck{width:28px;height:28px;padding:0;border-radius:50%;flex:0 0 28px}.taskMain{flex:1}.taskName{font-weight:850}.taskDesc{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.45}.xp{font-size:11px;color:#5b42b2;font-weight:800;margin-top:4px}.goalForm{display:grid;grid-template-columns:1fr 1fr;gap:9px}.goalForm label{font-size:12px;font-weight:800;color:var(--muted)}.goalForm input{margin-top:4px}.goalWide{grid-column:1/-1}.goalProgress{height:12px;background:#ebe7f3;border-radius:99px;overflow:hidden;margin-top:8px}.goalProgress>div{height:100%;background:var(--p);width:0}.badge{display:inline-block;background:#eee8ff;color:#5b42b2;border-radius:99px;padding:5px 9px;font-size:11px;font-weight:800}.taskList{margin-top:8px}.milestone{padding:12px;background:#f8f5ff;border-radius:15px;margin-top:9px;border:1px dashed #d9cff6}.modeList{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px}.modeItem{padding:9px;border-radius:12px;background:#f3f0fa;font-size:12px}.today{border:2px solid #dcd0ff}
+@media(max-width:430px){.tabs5{grid-template-columns:repeat(3,1fr)}.goalForm{grid-template-columns:1fr}.goalWide{grid-column:auto}.goalStats{grid-template-columns:1fr 1fr 1fr}}
+.subnav{margin:-5px 0 12px}.subnav button{width:100%;background:#f0edf8}
+.formcard,.grammarcard,.typingcard{border:2px solid #e5ddfb;border-radius:22px;background:linear-gradient(145deg,#fff,#f7f4ff);padding:20px;margin-top:14px}
+.formtitle{font-size:30px;font-weight:900;text-align:center}.formsgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.formitem{background:#f3f0fa;border-radius:14px;padding:11px}.formitem b{display:block;font-size:12px;color:#746e83;margin-bottom:4px}.formitem span{font-size:19px;font-weight:800;overflow-wrap:anywhere}
+.grammarq{font-size:21px;font-weight:800;line-height:1.6}.explain{margin-top:12px;padding:12px;background:#f4f8ff;border-radius:14px;font-size:14px;line-height:1.6}.typing-ja{font-size:28px;font-weight:900;text-align:center;padding:18px 4px}.typing-input{font-size:21px;text-align:center;letter-spacing:.5px}.typing-result{text-align:center;padding:14px;border-radius:14px;margin-top:10px;font-weight:800}.typing-result.ok{background:#e5f7ec;color:#176b37}.typing-result.ng{background:#fff0f0;color:#a22f2f}
+@media(max-width:430px){.tabs5{grid-template-columns:repeat(3,1fr)}.formsgrid{grid-template-columns:1fr}.formtitle{font-size:26px}}
+
+.detailbox{margin-top:14px;text-align:left;background:#faf9ff;border:1px solid #e9e4f4;border-radius:16px;padding:13px;font-size:13px;line-height:1.65}.detailrow{margin:8px 0}.detailrow b{display:inline-block;color:#5b42b2;margin-right:5px}.detailrow.example{background:#fff;padding:10px;border-radius:12px;border-left:4px solid var(--p)}.detailrow.example .jp{display:block;color:#625b70;margin-top:3px}.aiBox{background:linear-gradient(145deg,#f8f4ff,#eef7ff);border:1px solid #ddd5f4;border-radius:18px;padding:15px;margin-top:12px}.aiTitle{font-size:18px;font-weight:900}.aiItem{background:#fff;border-radius:13px;padding:11px;margin-top:8px}.aiItem b{display:block;margin-bottom:4px}.pill{display:inline-block;padding:4px 8px;border-radius:99px;background:#eee8ff;color:#5b42b2;font-size:11px;margin:2px}.detailbox ul{margin:5px 0 0 20px;padding:0}
+</style>
+</head>
+<body>
+<main class="app">
+<div class="hero"><h1>📚 中学英語 完全学習</h1><div class="sub">中1〜中3の単語・熟語を、カード＆テストで覚える</div></div>
+
+<nav class="tabs5">
+<button id="tabStudy" class="active">📖 暗記</button>
+<button id="tabForms">🔤 語形</button>
+<button id="tabGrammar">📐 文法</button>
+<button id="tabTyping">⌨️ タイピング</button>
+<button id="tabTest">📝 テスト</button>
+<button id="tabGoal">🎯 目標</button>
+</nav>
+<div class="subnav"><button id="tabProgress">📊 進捗</button></div>
+
+<section id="study" class="panel">
+<div class="controls">
+<select id="kind"><option value="all">単語＋熟語</option><option value="word">単語だけ</option><option value="phrase">熟語・表現だけ</option></select>
+<select id="order"><option value="random">ランダム</option><option value="weak">苦手優先</option><option value="new">未学習優先</option></select>
+</div>
+<div class="stats"><span id="count">読み込み中…</span><span id="score"></span></div>
+<div id="card" class="card"><div><div class="pic">📖</div><div class="word">読み込み中</div></div></div>
+<div class="progress"><div id="bar" class="bar"></div></div>
+<div class="actions"><button class="primary" id="flip">🔄 めくる</button><button id="speak">🔊 発音</button></div>
+<div class="actions actions3"><button class="good" id="remember">覚えた ✓</button><button class="bad" id="again">もう一回</button><button id="next">次へ →</button></div>
+<div class="auto">
+<div class="autorow"><b>自動で英単語を流す</b><button id="autoBtn">▶ ON</button></div>
+<div style="margin-top:8px"><small>速度：<span id="speedText">3秒</span></small><input id="speed" type="range" min="1" max="10" value="3"></div>
+</div>
+</section>
+
+
+<section id="forms" class="panel hidden">
+<h2>🔤 単語の「形」トレーニング</h2>
+<div class="small">原形だけでなく、三単現・過去形・過去分詞・ing形・未来表現・現在完了・進行形、比較級・最上級・複数形などをまとめて確認。</div>
+<div class="controls" style="margin-top:10px">
+<select id="formType"><option value="all">すべて</option><option value="verb">動詞の変化</option><option value="adj">形容詞の変化</option><option value="noun">名詞の変化</option></select>
+<select id="formOrder"><option value="random">ランダム</option><option value="weak">苦手優先</option></select>
+</div>
+<div id="formBody"></div>
+</section>
+
+<section id="grammar" class="panel hidden">
+<h2>📐 文法トレーニング</h2>
+<div class="small">中1〜中3の主要文法を、選択問題→解説で練習。</div>
+<div class="controls" style="margin-top:10px">
+<select id="grammarLevel"><option value="all">中1〜中3</option><option value="1">中1</option><option value="2">中2</option><option value="3">中3</option></select>
+<select id="grammarTopic"><option value="all">全分野</option><option value="be">be動詞・一般動詞</option><option value="question">疑問文・否定文</option><option value="tense">時制</option><option value="modal">助動詞</option><option value="toing">不定詞・動名詞</option><option value="compare">比較</option><option value="passive">受動態</option><option value="presentperfect">現在完了</option><option value="relative">関係代名詞</option><option value="conjunction">接続詞</option><option value="sentence">文型・語順</option></select>
+</div>
+<div id="grammarBody"></div>
+</section>
+
+<section id="typing" class="panel hidden">
+<h2>⌨️ 日本語 → 英語タイピング</h2>
+<div class="small">日本語の意味を見て、英語を入力。熟語・表現はひとまとまりで出題します。</div>
+<div class="controls" style="margin-top:10px">
+<select id="typingKind"><option value="word">単語</option><option value="phrase">熟語・表現</option><option value="all">単語＋熟語</option></select>
+<select id="typingOrder"><option value="random">ランダム</option><option value="weak">苦手優先</option></select>
+</div>
+<div id="typingBody"></div>
+</section>
+
+<section id="test" class="panel hidden">
+<div class="stats"><span id="testNo">10問テスト</span><span id="testScore">0点</span></div>
+<div id="testBody"></div>
+</section>
+
+<section id="goal" class="panel hidden">
+<div class="goalHero"><div class="goalTitle">🎯 クエスト型・学習目標</div><div class="goalMeta" id="goalMeta">目標日までの学習を自動で分配します。</div><div class="goalStats"><div class="goalStat"><span>達成</span><b id="goalDone">0%</b></div><div class="goalStat"><span>残り</span><b id="goalDays">-</b></div><div class="goalStat"><span>XP</span><b id="goalXP">0</b></div></div></div>
+<div class="panel" style="padding:13px;margin-bottom:10px">
+<h2 style="margin:3px 0 10px">⚙️ 目標を設定</h2>
+<div class="goalForm">
+<label>開始日<input id="goalStart" type="date"></label>
+<label>目標日<input id="goalDate" type="date"></label>
+<label>覚えたいカード数<input id="goalTarget" type="number" min="1" value="100"></label>
+<label>1日の勉強時間（分）<input id="goalMinutes" type="number" min="5" value="30"></label>
+<label class="goalWide">📌 目標メモ<input id="goalMemo" type="text" placeholder="例：定期テストまでに中2文法を固める"></label>
+</div>
+<button class="primary" id="generateGoal" style="width:100%;margin-top:10px">🚀 この条件で学習クエストを生成</button>
+</div>
+<div id="goalPlan"></div>
+</section>
+
+<section id="progress" class="panel hidden">
+<h2>📊 学習状況</h2>
+<div id="progressBody"></div>
+<div class="aiBox">
+<div class="aiTitle">🤖 AI学習分析</div>
+<div class="small" style="margin-top:4px">これまでの正解・「もう一回」・語形/文法/タイピングの記録から、苦手になりやすい傾向と対策を自動で整理します。</div>
+<div id="aiAnalysis" style="margin-top:10px"></div>
+<button class="primary" id="runAI" style="margin-top:10px;width:100%">✨ 苦手傾向を分析する</button>
+</div>
+</section>
+
+<section class="panel small">
+<b>収録データについて</b><br>
+文部科学省の現行中学校外国語の解説では、小学校で学んだ語に加えて中学校で新たに<strong>1,600〜1,800語程度</strong>を指導する目安が示されています。ただし、教科書会社ごとに掲載語・熟語は異なるため、「全国共通の完全な1冊の単語表」があるわけではありません。<br><br>
+このサイトは、共通コア＋熟語を内蔵し、オンライン公開時にはオープンな英和辞書データを追加読み込みできる設計です。さらに、語形変化（過去形・過去分詞・ing形・未来表現など）、文法問題、日本語→英語タイピングを収録しています。
+</section>
+</main>
+
+<script>
+const CORE=[{"grade": 1, "kind": "word", "en": "I", "ja": "私", "reading": "アイ"}, {"grade": 1, "kind": "word", "en": "you", "ja": "あなた、あなたたち", "reading": "ユー"}, {"grade": 1, "kind": "word", "en": "he", "ja": "彼", "reading": "ヒー"}, {"grade": 1, "kind": "word", "en": "she", "ja": "彼女", "reading": "シー"}, {"grade": 1, "kind": "word", "en": "we", "ja": "私たち", "reading": "ウィー"}, {"grade": 1, "kind": "word", "en": "they", "ja": "彼ら、彼女ら", "reading": "ゼイ"}, {"grade": 1, "kind": "word", "en": "this", "ja": "これ、この", "reading": "ディス"}, {"grade": 1, "kind": "word", "en": "that", "ja": "あれ、あの", "reading": "ザット"}, {"grade": 1, "kind": "word", "en": "what", "ja": "何", "reading": "ワット"}, {"grade": 1, "kind": "word", "en": "who", "ja": "誰", "reading": "フー"}, {"grade": 1, "kind": "word", "en": "where", "ja": "どこ", "reading": "ウェア"}, {"grade": 1, "kind": "word", "en": "when", "ja": "いつ", "reading": "ウェン"}, {"grade": 1, "kind": "word", "en": "why", "ja": "なぜ", "reading": "ホワイ"}, {"grade": 1, "kind": "word", "en": "how", "ja": "どのように、どうやって", "reading": "ハウ"}, {"grade": 1, "kind": "word", "en": "yes", "ja": "はい", "reading": "イエス"}, {"grade": 1, "kind": "word", "en": "no", "ja": "いいえ", "reading": "ノウ"}, {"grade": 1, "kind": "word", "en": "name", "ja": "名前", "reading": "ネイム"}, {"grade": 1, "kind": "word", "en": "friend", "ja": "友達", "reading": "フレンド"}, {"grade": 1, "kind": "word", "en": "family", "ja": "家族", "reading": "ファミリー"}, {"grade": 1, "kind": "word", "en": "father", "ja": "父", "reading": "ファーザー"}, {"grade": 1, "kind": "word", "en": "mother", "ja": "母", "reading": "マザー"}, {"grade": 1, "kind": "word", "en": "brother", "ja": "兄、弟", "reading": "ブラザー"}, {"grade": 1, "kind": "word", "en": "sister", "ja": "姉、妹", "reading": "シスター"}, {"grade": 1, "kind": "word", "en": "school", "ja": "学校", "reading": "スクール"}, {"grade": 1, "kind": "word", "en": "student", "ja": "生徒", "reading": "スチューデント"}, {"grade": 1, "kind": "word", "en": "teacher", "ja": "先生", "reading": "ティーチャー"}, {"grade": 1, "kind": "word", "en": "class", "ja": "授業、クラス", "reading": "クラス"}, {"grade": 1, "kind": "word", "en": "book", "ja": "本", "reading": "ブック"}, {"grade": 1, "kind": "word", "en": "pen", "ja": "ペン", "reading": "ペン"}, {"grade": 1, "kind": "word", "en": "desk", "ja": "机", "reading": "デスク"}, {"grade": 1, "kind": "word", "en": "chair", "ja": "いす", "reading": "チェア"}, {"grade": 1, "kind": "word", "en": "dog", "ja": "犬", "reading": "ドッグ"}, {"grade": 1, "kind": "word", "en": "cat", "ja": "猫", "reading": "キャット"}, {"grade": 1, "kind": "word", "en": "bird", "ja": "鳥", "reading": "バード"}, {"grade": 1, "kind": "word", "en": "fish", "ja": "魚", "reading": "フィッシュ"}, {"grade": 1, "kind": "word", "en": "food", "ja": "食べ物", "reading": "フード"}, {"grade": 1, "kind": "word", "en": "water", "ja": "水", "reading": "ウォーター"}, {"grade": 1, "kind": "word", "en": "rice", "ja": "米、ご飯", "reading": "ライス"}, {"grade": 1, "kind": "word", "en": "bread", "ja": "パン", "reading": "ブレッド"}, {"grade": 1, "kind": "word", "en": "apple", "ja": "りんご", "reading": "アップル"}, {"grade": 1, "kind": "word", "en": "music", "ja": "音楽", "reading": "ミュージック"}, {"grade": 1, "kind": "word", "en": "movie", "ja": "映画", "reading": "ムービー"}, {"grade": 1, "kind": "word", "en": "sport", "ja": "スポーツ", "reading": "スポート"}, {"grade": 1, "kind": "word", "en": "game", "ja": "ゲーム", "reading": "ゲーム"}, {"grade": 1, "kind": "word", "en": "like", "ja": "好きである", "reading": "ライク"}, {"grade": 1, "kind": "word", "en": "love", "ja": "愛する、大好きである", "reading": "ラブ"}, {"grade": 1, "kind": "word", "en": "play", "ja": "する、遊ぶ", "reading": "プレイ"}, {"grade": 1, "kind": "word", "en": "have", "ja": "持っている", "reading": "ハブ"}, {"grade": 1, "kind": "word", "en": "go", "ja": "行く", "reading": "ゴウ"}, {"grade": 1, "kind": "word", "en": "come", "ja": "来る", "reading": "カム"}, {"grade": 1, "kind": "word", "en": "get", "ja": "得る、手に入れる", "reading": "ゲット"}, {"grade": 1, "kind": "word", "en": "make", "ja": "作る", "reading": "メイク"}, {"grade": 1, "kind": "word", "en": "use", "ja": "使う", "reading": "ユーズ"}, {"grade": 1, "kind": "word", "en": "see", "ja": "見る、会う", "reading": "シー"}, {"grade": 1, "kind": "word", "en": "look", "ja": "見る", "reading": "ルック"}, {"grade": 1, "kind": "word", "en": "watch", "ja": "見る", "reading": "ウォッチ"}, {"grade": 1, "kind": "word", "en": "listen", "ja": "聞く", "reading": "リスン"}, {"grade": 1, "kind": "word", "en": "speak", "ja": "話す", "reading": "スピーク"}, {"grade": 1, "kind": "word", "en": "say", "ja": "言う", "reading": "セイ"}, {"grade": 1, "kind": "word", "en": "read", "ja": "読む", "reading": "リード"}, {"grade": 1, "kind": "word", "en": "write", "ja": "書く", "reading": "ライト"}, {"grade": 1, "kind": "word", "en": "eat", "ja": "食べる", "reading": "イート"}, {"grade": 1, "kind": "word", "en": "drink", "ja": "飲む", "reading": "ドリンク"}, {"grade": 1, "kind": "word", "en": "study", "ja": "勉強する", "reading": "スタディ"}, {"grade": 1, "kind": "word", "en": "work", "ja": "働く、仕事", "reading": "ワーク"}, {"grade": 1, "kind": "word", "en": "live", "ja": "住む", "reading": "リブ"}, {"grade": 1, "kind": "word", "en": "know", "ja": "知っている", "reading": "ノウ"}, {"grade": 1, "kind": "word", "en": "want", "ja": "欲しい、〜したい", "reading": "ウォント"}, {"grade": 1, "kind": "word", "en": "can", "ja": "〜できる", "reading": "キャン"}, {"grade": 1, "kind": "word", "en": "must", "ja": "〜しなければならない", "reading": "マスト"}, {"grade": 1, "kind": "word", "en": "good", "ja": "よい", "reading": "グッド"}, {"grade": 1, "kind": "word", "en": "nice", "ja": "すてきな", "reading": "ナイス"}, {"grade": 1, "kind": "word", "en": "big", "ja": "大きい", "reading": "ビッグ"}, {"grade": 1, "kind": "word", "en": "small", "ja": "小さい", "reading": "スモール"}, {"grade": 1, "kind": "word", "en": "new", "ja": "新しい", "reading": "ニュー"}, {"grade": 1, "kind": "word", "en": "old", "ja": "古い", "reading": "オウルド"}, {"grade": 1, "kind": "word", "en": "happy", "ja": "幸せな、うれしい", "reading": "ハッピー"}, {"grade": 1, "kind": "word", "en": "busy", "ja": "忙しい", "reading": "ビジー"}, {"grade": 1, "kind": "word", "en": "easy", "ja": "簡単な", "reading": "イージー"}, {"grade": 1, "kind": "word", "en": "difficult", "ja": "難しい", "reading": "ディフィカルト"}, {"grade": 1, "kind": "word", "en": "today", "ja": "今日", "reading": "トゥデイ"}, {"grade": 1, "kind": "word", "en": "tomorrow", "ja": "明日", "reading": "トゥモロウ"}, {"grade": 1, "kind": "word", "en": "yesterday", "ja": "昨日", "reading": "イエスタデイ"}, {"grade": 1, "kind": "word", "en": "morning", "ja": "朝", "reading": "モーニング"}, {"grade": 1, "kind": "word", "en": "afternoon", "ja": "午後", "reading": "アフタヌーン"}, {"grade": 1, "kind": "word", "en": "evening", "ja": "夕方、晩", "reading": "イーブニング"}, {"grade": 1, "kind": "word", "en": "night", "ja": "夜", "reading": "ナイト"}, {"grade": 1, "kind": "word", "en": "Sunday", "ja": "日曜日", "reading": "サンデイ"}, {"grade": 1, "kind": "word", "en": "Monday", "ja": "月曜日", "reading": "マンデイ"}, {"grade": 1, "kind": "word", "en": "Tuesday", "ja": "火曜日", "reading": "チューズデイ"}, {"grade": 1, "kind": "word", "en": "Wednesday", "ja": "水曜日", "reading": "ウェンズデイ"}, {"grade": 1, "kind": "word", "en": "Thursday", "ja": "木曜日", "reading": "サーズデイ"}, {"grade": 1, "kind": "word", "en": "Friday", "ja": "金曜日", "reading": "フライデイ"}, {"grade": 1, "kind": "word", "en": "Saturday", "ja": "土曜日", "reading": "サタデイ"}, {"grade": 1, "kind": "phrase", "en": "How are you?", "ja": "元気ですか", "reading": "ハウ アー ユー"}, {"grade": 1, "kind": "phrase", "en": "Nice to meet you.", "ja": "はじめまして", "reading": "ナイス トゥ ミート ユー"}, {"grade": 1, "kind": "phrase", "en": "Thank you.", "ja": "ありがとう", "reading": "サンキュー"}, {"grade": 1, "kind": "phrase", "en": "You're welcome.", "ja": "どういたしまして", "reading": "ユア ウェルカム"}, {"grade": 1, "kind": "phrase", "en": "See you.", "ja": "またね", "reading": "シー ユー"}, {"grade": 1, "kind": "phrase", "en": "Good morning.", "ja": "おはよう", "reading": "グッド モーニング"}, {"grade": 1, "kind": "phrase", "en": "Good night.", "ja": "おやすみ", "reading": "グッド ナイト"}, {"grade": 1, "kind": "phrase", "en": "Excuse me.", "ja": "すみません", "reading": "エクスキューズ ミー"}, {"grade": 1, "kind": "phrase", "en": "I'm sorry.", "ja": "ごめんなさい", "reading": "アイム ソーリー"}, {"grade": 1, "kind": "phrase", "en": "How old are you?", "ja": "何歳ですか", "reading": "ハウ オウルド アー ユー"}, {"grade": 1, "kind": "phrase", "en": "What time is it?", "ja": "何時ですか", "reading": "ワット タイム イズ イット"}, {"grade": 1, "kind": "phrase", "en": "Let's play.", "ja": "遊びましょう", "reading": "レッツ プレイ"}, {"grade": 1, "kind": "phrase", "en": "Let's go.", "ja": "行きましょう", "reading": "レッツ ゴウ"}, {"grade": 2, "kind": "word", "en": "become", "ja": "〜になる", "reading": "ビカム"}, {"grade": 2, "kind": "word", "en": "begin", "ja": "始める", "reading": "ビギン"}, {"grade": 2, "kind": "word", "en": "bring", "ja": "持ってくる", "reading": "ブリング"}, {"grade": 2, "kind": "word", "en": "buy", "ja": "買う", "reading": "バイ"}, {"grade": 2, "kind": "word", "en": "build", "ja": "建てる", "reading": "ビルド"}, {"grade": 2, "kind": "word", "en": "catch", "ja": "捕まえる", "reading": "キャッチ"}, {"grade": 2, "kind": "word", "en": "choose", "ja": "選ぶ", "reading": "チューズ"}, {"grade": 2, "kind": "word", "en": "come", "ja": "来る", "reading": "カム"}, {"grade": 2, "kind": "word", "en": "cut", "ja": "切る", "reading": "カット"}, {"grade": 2, "kind": "word", "en": "draw", "ja": "描く、引く", "reading": "ドロー"}, {"grade": 2, "kind": "word", "en": "drive", "ja": "運転する", "reading": "ドライブ"}, {"grade": 2, "kind": "word", "en": "feel", "ja": "感じる", "reading": "フィール"}, {"grade": 2, "kind": "word", "en": "find", "ja": "見つける", "reading": "ファインド"}, {"grade": 2, "kind": "word", "en": "forget", "ja": "忘れる", "reading": "フォゲット"}, {"grade": 2, "kind": "word", "en": "give", "ja": "与える", "reading": "ギブ"}, {"grade": 2, "kind": "word", "en": "grow", "ja": "成長する、育つ", "reading": "グロウ"}, {"grade": 2, "kind": "word", "en": "hear", "ja": "聞こえる", "reading": "ヒア"}, {"grade": 2, "kind": "word", "en": "keep", "ja": "保つ", "reading": "キープ"}, {"grade": 2, "kind": "word", "en": "leave", "ja": "去る、残す", "reading": "リーブ"}, {"grade": 2, "kind": "word", "en": "lose", "ja": "失う、負ける", "reading": "ルーズ"}, {"grade": 2, "kind": "word", "en": "meet", "ja": "会う", "reading": "ミート"}, {"grade": 2, "kind": "word", "en": "pay", "ja": "支払う", "reading": "ペイ"}, {"grade": 2, "kind": "word", "en": "put", "ja": "置く", "reading": "プット"}, {"grade": 2, "kind": "word", "en": "run", "ja": "走る", "reading": "ラン"}, {"grade": 2, "kind": "word", "en": "sell", "ja": "売る", "reading": "セル"}, {"grade": 2, "kind": "word", "en": "send", "ja": "送る", "reading": "センド"}, {"grade": 2, "kind": "word", "en": "show", "ja": "見せる", "reading": "ショウ"}, {"grade": 2, "kind": "word", "en": "sit", "ja": "座る", "reading": "シット"}, {"grade": 2, "kind": "word", "en": "sleep", "ja": "眠る", "reading": "スリープ"}, {"grade": 2, "kind": "word", "en": "stand", "ja": "立つ", "reading": "スタンド"}, {"grade": 2, "kind": "word", "en": "take", "ja": "取る、連れていく", "reading": "テイク"}, {"grade": 2, "kind": "word", "en": "teach", "ja": "教える", "reading": "ティーチ"}, {"grade": 2, "kind": "word", "en": "tell", "ja": "伝える", "reading": "テル"}, {"grade": 2, "kind": "word", "en": "think", "ja": "思う、考える", "reading": "シンク"}, {"grade": 2, "kind": "word", "en": "understand", "ja": "理解する", "reading": "アンダースタンド"}, {"grade": 2, "kind": "word", "en": "win", "ja": "勝つ", "reading": "ウィン"}, {"grade": 2, "kind": "word", "en": "yesterday", "ja": "昨日", "reading": "イエスタデイ"}, {"grade": 2, "kind": "word", "en": "usually", "ja": "たいてい", "reading": "ユージュアリー"}, {"grade": 2, "kind": "word", "en": "sometimes", "ja": "ときどき", "reading": "サムタイムズ"}, {"grade": 2, "kind": "word", "en": "always", "ja": "いつも", "reading": "オールウェイズ"}, {"grade": 2, "kind": "word", "en": "often", "ja": "しばしば", "reading": "オフン"}, {"grade": 2, "kind": "word", "en": "never", "ja": "決して〜ない", "reading": "ネバー"}, {"grade": 2, "kind": "word", "en": "because", "ja": "なぜなら", "reading": "ビコーズ"}, {"grade": 2, "kind": "word", "en": "before", "ja": "〜の前に", "reading": "ビフォー"}, {"grade": 2, "kind": "word", "en": "after", "ja": "〜の後に", "reading": "アフター"}, {"grade": 2, "kind": "word", "en": "during", "ja": "〜の間", "reading": "デュアリング"}, {"grade": 2, "kind": "word", "en": "around", "ja": "〜の周りに", "reading": "アラウンド"}, {"grade": 2, "kind": "word", "en": "together", "ja": "一緒に", "reading": "トゥゲザー"}, {"grade": 2, "kind": "word", "en": "different", "ja": "異なる", "reading": "ディファレント"}, {"grade": 2, "kind": "word", "en": "important", "ja": "重要な", "reading": "インポータント"}, {"grade": 2, "kind": "word", "en": "popular", "ja": "人気のある", "reading": "ポピュラー"}, {"grade": 2, "kind": "word", "en": "famous", "ja": "有名な", "reading": "フェイマス"}, {"grade": 2, "kind": "word", "en": "beautiful", "ja": "美しい", "reading": "ビューティフル"}, {"grade": 2, "kind": "word", "en": "interesting", "ja": "興味深い", "reading": "インタレスティング"}, {"grade": 2, "kind": "word", "en": "exciting", "ja": "わくわくさせる", "reading": "エキサイティング"}, {"grade": 2, "kind": "word", "en": "favorite", "ja": "お気に入りの", "reading": "フェイバリット"}, {"grade": 2, "kind": "phrase", "en": "get up", "ja": "起きる", "reading": "ゲット アップ"}, {"grade": 2, "kind": "phrase", "en": "go home", "ja": "家に帰る", "reading": "ゴウ ホーム"}, {"grade": 2, "kind": "phrase", "en": "look at", "ja": "〜を見る", "reading": "ルック アット"}, {"grade": 2, "kind": "phrase", "en": "listen to", "ja": "〜を聞く", "reading": "リスン トゥ"}, {"grade": 2, "kind": "phrase", "en": "wait for", "ja": "〜を待つ", "reading": "ウェイト フォー"}, {"grade": 2, "kind": "phrase", "en": "take a picture", "ja": "写真を撮る", "reading": "テイク ア ピクチャー"}, {"grade": 2, "kind": "phrase", "en": "have to", "ja": "〜しなければならない", "reading": "ハブ トゥ"}, {"grade": 2, "kind": "phrase", "en": "want to", "ja": "〜したい", "reading": "ウォント トゥ"}, {"grade": 2, "kind": "phrase", "en": "be good at", "ja": "〜が得意である", "reading": "ビー グッド アット"}, {"grade": 2, "kind": "phrase", "en": "be interested in", "ja": "〜に興味がある", "reading": "ビー インタレスティッド イン"}, {"grade": 2, "kind": "phrase", "en": "a lot of", "ja": "たくさんの", "reading": "ア ロット オブ"}, {"grade": 2, "kind": "phrase", "en": "How long", "ja": "どのくらいの期間", "reading": "ハウ ロング"}, {"grade": 2, "kind": "phrase", "en": "How often", "ja": "どのくらいの頻度で", "reading": "ハウ オフン"}, {"grade": 3, "kind": "word", "en": "accept", "ja": "受け入れる", "reading": "アクセプト"}, {"grade": 3, "kind": "word", "en": "agree", "ja": "賛成する", "reading": "アグリー"}, {"grade": 3, "kind": "word", "en": "allow", "ja": "許す", "reading": "アラウ"}, {"grade": 3, "kind": "word", "en": "answer", "ja": "答える、答え", "reading": "アンサー"}, {"grade": 3, "kind": "word", "en": "appear", "ja": "現れる", "reading": "アピア"}, {"grade": 3, "kind": "word", "en": "believe", "ja": "信じる", "reading": "ビリーブ"}, {"grade": 3, "kind": "word", "en": "borrow", "ja": "借りる", "reading": "ボロウ"}, {"grade": 3, "kind": "word", "en": "carry", "ja": "運ぶ", "reading": "キャリー"}, {"grade": 3, "kind": "word", "en": "cause", "ja": "引き起こす、原因", "reading": "コーズ"}, {"grade": 3, "kind": "word", "en": "change", "ja": "変える、変化", "reading": "チェンジ"}, {"grade": 3, "kind": "word", "en": "continue", "ja": "続ける", "reading": "コンティニュー"}, {"grade": 3, "kind": "word", "en": "decide", "ja": "決める", "reading": "ディサイド"}, {"grade": 3, "kind": "word", "en": "develop", "ja": "発達させる", "reading": "ディベロップ"}, {"grade": 3, "kind": "word", "en": "discover", "ja": "発見する", "reading": "ディスカバー"}, {"grade": 3, "kind": "word", "en": "enjoy", "ja": "楽しむ", "reading": "エンジョイ"}, {"grade": 3, "kind": "word", "en": "explain", "ja": "説明する", "reading": "エクスプレイン"}, {"grade": 3, "kind": "word", "en": "finish", "ja": "終える", "reading": "フィニッシュ"}, {"grade": 3, "kind": "word", "en": "happen", "ja": "起こる", "reading": "ハプン"}, {"grade": 3, "kind": "word", "en": "hope", "ja": "望む", "reading": "ホウプ"}, {"grade": 3, "kind": "word", "en": "improve", "ja": "改善する", "reading": "インプルーブ"}, {"grade": 3, "kind": "word", "en": "include", "ja": "含む", "reading": "インクルード"}, {"grade": 3, "kind": "word", "en": "introduce", "ja": "紹介する", "reading": "イントロデュース"}, {"grade": 3, "kind": "word", "en": "join", "ja": "参加する", "reading": "ジョイン"}, {"grade": 3, "kind": "word", "en": "learn", "ja": "学ぶ", "reading": "ラーン"}, {"grade": 3, "kind": "word", "en": "mean", "ja": "意味する", "reading": "ミーン"}, {"grade": 3, "kind": "word", "en": "offer", "ja": "申し出る", "reading": "オファー"}, {"grade": 3, "kind": "word", "en": "practice", "ja": "練習する、練習", "reading": "プラクティス"}, {"grade": 3, "kind": "word", "en": "prepare", "ja": "準備する", "reading": "プリペア"}, {"grade": 3, "kind": "word", "en": "protect", "ja": "守る", "reading": "プロテクト"}, {"grade": 3, "kind": "word", "en": "receive", "ja": "受け取る", "reading": "リシーブ"}, {"grade": 3, "kind": "word", "en": "remember", "ja": "覚えている", "reading": "リメンバー"}, {"grade": 3, "kind": "word", "en": "return", "ja": "戻る、返す", "reading": "リターン"}, {"grade": 3, "kind": "word", "en": "save", "ja": "救う、保存する", "reading": "セイブ"}, {"grade": 3, "kind": "word", "en": "share", "ja": "共有する", "reading": "シェア"}, {"grade": 3, "kind": "word", "en": "solve", "ja": "解決する", "reading": "ソルブ"}, {"grade": 3, "kind": "word", "en": "spend", "ja": "費やす", "reading": "スペンド"}, {"grade": 3, "kind": "word", "en": "support", "ja": "支える、支持する", "reading": "サポート"}, {"grade": 3, "kind": "word", "en": "travel", "ja": "旅行する、旅行", "reading": "トラベル"}, {"grade": 3, "kind": "word", "en": "visit", "ja": "訪れる", "reading": "ビジット"}, {"grade": 3, "kind": "word", "en": "wonder", "ja": "〜かなと思う", "reading": "ワンダー"}, {"grade": 3, "kind": "word", "en": "possible", "ja": "可能な", "reading": "ポッシブル"}, {"grade": 3, "kind": "word", "en": "necessary", "ja": "必要な", "reading": "ネセサリー"}, {"grade": 3, "kind": "word", "en": "special", "ja": "特別な", "reading": "スペシャル"}, {"grade": 3, "kind": "word", "en": "natural", "ja": "自然な", "reading": "ナチュラル"}, {"grade": 3, "kind": "word", "en": "traditional", "ja": "伝統的な", "reading": "トラディショナル"}, {"grade": 3, "kind": "word", "en": "international", "ja": "国際的な", "reading": "インターナショナル"}, {"grade": 3, "kind": "word", "en": "environment", "ja": "環境", "reading": "エンバイロメント"}, {"grade": 3, "kind": "word", "en": "culture", "ja": "文化", "reading": "カルチャー"}, {"grade": 3, "kind": "word", "en": "future", "ja": "未来", "reading": "フューチャー"}, {"grade": 3, "kind": "word", "en": "society", "ja": "社会", "reading": "ソサエティ"}, {"grade": 3, "kind": "word", "en": "experience", "ja": "経験", "reading": "エクスペリエンス"}, {"grade": 3, "kind": "word", "en": "language", "ja": "言語", "reading": "ランゲージ"}, {"grade": 3, "kind": "phrase", "en": "be able to", "ja": "〜することができる", "reading": "ビー エイブル トゥ"}, {"grade": 3, "kind": "phrase", "en": "have been to", "ja": "〜へ行ったことがある", "reading": "ハブ ビーン トゥ"}, {"grade": 3, "kind": "phrase", "en": "look forward to", "ja": "〜を楽しみにする", "reading": "ルック フォワード トゥ"}, {"grade": 3, "kind": "phrase", "en": "take care of", "ja": "〜の世話をする", "reading": "テイク ケア オブ"}, {"grade": 3, "kind": "phrase", "en": "be afraid of", "ja": "〜を恐れている", "reading": "ビー アフレイド オブ"}, {"grade": 3, "kind": "phrase", "en": "be proud of", "ja": "〜を誇りに思う", "reading": "ビー プラウド オブ"}, {"grade": 3, "kind": "phrase", "en": "for example", "ja": "例えば", "reading": "フォー イグザンプル"}, {"grade": 3, "kind": "phrase", "en": "in the future", "ja": "将来", "reading": "イン ザ フューチャー"}, {"grade": 3, "kind": "phrase", "en": "at first", "ja": "最初は", "reading": "アット ファースト"}, {"grade": 3, "kind": "phrase", "en": "at the same time", "ja": "同時に", "reading": "アット ザ セイム タイム"}, {"grade": 3, "kind": "phrase", "en": "in fact", "ja": "実際には", "reading": "イン ファクト"}, {"grade": 3, "kind": "phrase", "en": "of course", "ja": "もちろん", "reading": "オブ コース"}, {"grade": 3, "kind": "phrase", "en": "one of", "ja": "〜のうちの1つ", "reading": "ワン オブ"}, {"grade": 3, "kind": "phrase", "en": "as soon as", "ja": "〜するとすぐに", "reading": "アズ スーン アズ"}, {"grade": 3, "kind": "phrase", "en": "because of", "ja": "〜のために", "reading": "ビコーズ オブ"}, {"grade": 3, "kind": "phrase", "en": "such as", "ja": "〜のような", "reading": "サッチ アズ"}];
+const REMOTE_LEVEL="https://raw.githubusercontent.com/kujirahand/EJDict/master/tools/level.txt";
+const REMOTE_BASE="https://raw.githubusercontent.com/kujirahand/EJDict/master/src/";
+let all=[...CORE],deck=[],idx=0,flipped=false,autoTimer=null,autoOn=false;
+let learned=JSON.parse(localStorage.getItem("jhs_learned_v2")||"{}");
+let test={list:[],n:0,score:0,answered:false};
+
+const $=id=>document.getElementById(id);
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function key(c){return c.grade+"|"+c.kind+"|"+c.en}
+function pic(c){
+ const w=c.en.toLowerCase();
+ const map=[["cat","🐱"],["dog","🐶"],["bird","🐦"],["fish","🐟"],["apple","🍎"],["bread","🍞"],["water","💧"],["book","📚"],["school","🏫"],["music","🎵"],["game","🎮"],["movie","🎬"],["food","🍴"],["family","👨‍👩‍👧"],["friend","🧑‍🤝‍🧑"],["sun","☀️"],["moon","🌙"],["star","⭐"],["rain","🌧️"],["snow","❄️"],["car","🚗"],["train","🚆"],["bus","🚌"],["house","🏠"],["flower","🌸"],["love","❤️"],["happy","😊"],["sad","😢"]];
+ for(const [x,e] of map) if(w.includes(x)) return e;
+ return c.kind==="phrase"?"💬":"🔤";
+}
+function rebuild(){
+ const k=$("kind").value,ord=$("order").value;
+ let a=all.filter(c=>k==="all"||c.kind===k);
+ if(ord==="weak") a.sort((x,y)=>(learned[key(x)]||0)-(learned[key(y)]||0));
+ else if(ord==="new") a.sort((x,y)=>Number(!!learned[key(x)])-Number(!!learned[key(y)]));
+ else a=shuffle(a);
+ deck=a;idx=0;flipped=false;render();
+}
+const DETAILS={
+ "go":{usage:"go to + 場所 で「〜へ行く」。go home のように home の前には通常 to を置かない。",example:"I go to school every day.",exampleJa:"私は毎日学校へ行きます。",reference:"過去形 went、過去分詞 gone。have gone to と have been to の違いにも注意。",caution:"三単現は goes。過去形は go + ed ではなく went。"},
+ "be":{usage:"am / is / are などで「〜です」「〜にいる」。主語に合わせて形が変わる。",example:"She is happy.",exampleJa:"彼女は幸せです。",reference:"過去形 was / were、過去分詞 been。",caution:"I am、he/she/it is、you/we/they are の組み合わせを覚える。"},
+ "have":{usage:"have + 名詞で「持っている」。have to + 動詞で「〜しなければならない」。",example:"I have a new book.",exampleJa:"私は新しい本を持っています。",reference:"三単現は has、過去形・過去分詞は had。",caution:"現在完了では have/has + 過去分詞。"},
+ "make":{usage:"make + 人/物 + 形容詞・動詞の原形など、さまざまな形で使う。",example:"My mother makes dinner.",exampleJa:"私の母は夕食を作ります。",reference:"make a mistake（間違える）のような熟語も重要。",caution:"過去形・過去分詞は made。"},
+ "take":{usage:"「取る」だけでなく、take a picture、take a bus など幅広く使う。",example:"I take the bus to school.",exampleJa:"私はバスで学校へ行きます。",reference:"take + 時間 で「時間がかかる」。",caution:"過去形 took、過去分詞 taken。"},
+ "see":{usage:"see は「見る・会う・わかる」など文脈で意味が変わる。",example:"I saw my friend yesterday.",exampleJa:"私は昨日友達に会いました。",reference:"過去形 saw、過去分詞 seen。",caution:"see は不規則変化。過去分詞は seen。"},
+ "read":{usage:"現在形と過去形・過去分詞でつづりは同じだが発音が異なる。",example:"I read books every day.",exampleJa:"私は毎日本を読みます。",reference:"read の過去形・過去分詞も read。",caution:"つづりだけで判断せず、文の時制を見る。"},
+ "write":{usage:"write + 物/人 で「〜を書く」。write to + 人 も使う。",example:"I write a letter to my friend.",exampleJa:"私は友達に手紙を書きます。",reference:"過去形 wrote、過去分詞 written。",caution:"write の過去形を writed にしない。"},
+ "study":{usage:"study English のように、学ぶ対象を後ろに置く。",example:"I study English after dinner.",exampleJa:"私は夕食後に英語を勉強します。",reference:"三単現 studies、過去形 studied。",caution:"子音+yで終わるので三単現は -ies。"},
+ "like":{usage:"like + 名詞 / like to do / like doing で「好き・好む」。",example:"I like playing soccer.",exampleJa:"私はサッカーをするのが好きです。",reference:"would like to do は「〜したい」。",caution:"like と would like の意味を区別する。"},
+ "want":{usage:"want to + 動詞の原形で「〜したい」。",example:"I want to be a teacher.",exampleJa:"私は先生になりたいです。",reference:"want + 人 + to do で「人に〜してほしい」。",caution:"want の直後に動詞を置くなら to が必要。"},
+ "can":{usage:"can + 動詞の原形で「〜できる」。",example:"I can swim.",exampleJa:"私は泳ぐことができます。",reference:"助動詞なので三単現の -s を付けない。",caution:"can の後ろは必ず動詞の原形。"},
+ "because":{usage:"理由を表し「なぜなら〜だから」。because + 主語 + 動詞。",example:"I stayed home because it was raining.",exampleJa:"雨が降っていたので、私は家にいました。",reference:"because と so を同じ文で重ねないのが基本。",caution:"理由と結果のどちらを because でつなぐか確認する。"},
+ "if":{usage:"条件「もし〜なら」。中学英語では if 節の未来の内容にも現在形を使うことがある。",example:"If it rains, I will stay home.",exampleJa:"もし雨が降ったら、私は家にいます。",reference:"if + 現在形, will + 動詞の原形。",caution:"if節の中を will rain としないのが基本。"},
+ "phrase:look at":{usage:"look at + 名詞で「〜を見る」。",example:"Look at this picture.",exampleJa:"この写真を見てください。",reference:"look for（探す）、look after（世話をする）と区別。",caution:"look だけでなく、後ろの前置詞までセットで覚える。"}
+};
+function details(c){
+ const exact=DETAILS[c.kind+":"+c.en.toLowerCase()]||DETAILS[c.en.toLowerCase()];
+ if(exact)return {translation:c.ja, ...exact};
+ const isPhrase=c.kind==="phrase";
+ let example="", exampleJa="", usage="", reference="", caution="";
+ if(isPhrase){example='I use the expression "'+c.en+'" in a sentence.';exampleJa="私はこの表現を文の中で使います。";usage="熟語・表現は単語をバラバラにせず、まとまりで覚える。";reference="前後の語と一緒に意味を確認すると定着しやすい。";caution="前置詞や冠詞を省略・変更すると意味や自然さが変わることがある。";}
+ else {example="This word is important in English.";exampleJa="この単語は英語で重要です。";usage="文の中で品詞と一緒に確認する。";reference="語形・時制・前置詞との組み合わせもセットで確認。";caution="日本語の意味が1つとは限らないので、文脈で意味を決める。";}
+ return {translation:c.ja,example,exampleJa,usage,reference,caution};
+}
+function render(){
+ if(!deck.length){$("card").innerHTML="<div><div class='word'>カードがありません</div></div>";return}
+ const c=deck[idx], pct=((idx+1)/deck.length*100);
+ $("count").textContent=(idx+1)+" / "+deck.length;
+ $("score").textContent="覚えた："+Object.keys(learned).length;
+ $("bar").style.width=pct+"%";
+ if(!flipped)$("card").innerHTML="<span class='tag'>"+(c.kind==="phrase"?"熟語・表現":"単語")+"</span><div><div class='pic'>"+pic(c)+"</div><div class='word'>"+esc(c.en)+"</div><div class='hint'>タップ / めくる → 意味と読み方</div></div>";
+ else {
+ const d=details(c);
+ $("card").innerHTML="<span class='tag'>"+(c.kind==="phrase"?"熟語・表現":"単語")+"</span><div style='width:100%'><div class='pic'>"+pic(c)+"</div><div class='word'>"+esc(c.en)+"</div><div class='meaning'>"+esc(d.translation)+"</div><div class='reading'>読み方："+esc(c.reading||"発音を聞いて覚えよう")+"</div><div class='detailbox'>"+
+ "<div class='detailrow'><b>用例・使い方</b>"+esc(d.usage)+"</div>"+
+ "<div class='detailrow example'><b>例文</b><br>"+esc(d.example)+"<span class='jp'>日本語訳："+esc(d.exampleJa)+"</span></div>"+
+ "<div class='detailrow'><b>参考</b>"+esc(d.reference)+"</div>"+
+ "<div class='detailrow'><b>注意</b>"+esc(d.caution)+"</div></div></div>";
+}
+}
+function esc(s){return String(s).replace(/[&<>"]/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[x]))}
+function flip(){flipped=!flipped;render()}
+function next(){if(!deck.length)return;idx=(idx+1)%deck.length;flipped=false;render()}
+function speak(){
+ if(!deck.length)return;
+ const u=new SpeechSynthesisUtterance(deck[idx].en);u.lang="en-US";u.rate=.82;
+ speechSynthesis.cancel();speechSynthesis.speak(u);
+}
+function restartAuto(){
+ clearInterval(autoTimer);
+ if(!autoOn)return;
+ autoTimer=setInterval(()=>{next();speak()},Number($("speed").value)*1000);
+}
+$("kind").onchange=rebuild;$("order").onchange=rebuild;$("flip").onclick=flip;$("card").onclick=flip;$("next").onclick=next;$("speak").onclick=speak;
+$("again").onclick=()=>{flipped=false;render()};
+$("remember").onclick=()=>{if(!deck.length)return;learned[key(deck[idx])]=Math.min(5,(learned[key(deck[idx])]||0)+1);localStorage.setItem("jhs_learned_v2",JSON.stringify(learned));next();};
+$("autoBtn").onclick=()=>{autoOn=!autoOn;$("autoBtn").textContent=autoOn?"⏸ OFF":"▶ ON";restartAuto()};
+$("speed").oninput=()=>{$("speedText").textContent=$("speed").value+"秒";restartAuto()};
+
+function show(tab){
+ ["study","forms","grammar","typing","test","goal","progress"].forEach(x=>$(x).classList.toggle("hidden",x!==tab));
+ ["tabStudy","tabForms","tabGrammar","tabTyping","tabTest","tabGoal","tabProgress"].forEach(x=>$(x).classList.remove("active"));
+ const id="tab"+tab[0].toUpperCase()+tab.slice(1);
+ if($(id))$(id).classList.add("active");
+ if(tab==="forms")startForms();
+ if(tab==="grammar")startGrammar();
+ if(tab==="typing")startTyping();
+ if(tab==="test")startTest();
+ if(tab==="goal")showGoal();
+ if(tab==="progress")showProgress();
+}
+$("tabStudy").onclick=()=>show("study");
+$("tabForms").onclick=()=>show("forms");
+$("tabGrammar").onclick=()=>show("grammar");
+$("tabTyping").onclick=()=>show("typing");
+$("tabTest").onclick=()=>show("test");
+$("tabGoal").onclick=()=>show("goal");
+$("tabProgress").onclick=()=>show("progress");
+
+
+// ===== 語形トレーニング =====
+// 中学英語で重要な活用をまとめて表示。
+// 「過去形だけ」ではなく、三単現・過去分詞・ing・未来・現在完了・進行形も確認できる。
+const FORMS=[
+{t:"verb",base:"be",s:"is",past:"was/were",pp:"been",ing:"being",future:"will be",perfect:"have/has been",prog:"am/is/are being",ja:"〜である、いる"},
+{t:"verb",base:"have",s:"has",past:"had",pp:"had",ing:"having",future:"will have",perfect:"have/has had",prog:"am/is/are having",ja:"持っている"},
+{t:"verb",base:"do",s:"does",past:"did",pp:"done",ing:"doing",future:"will do",perfect:"have/has done",prog:"am/is/are doing",ja:"する"},
+{t:"verb",base:"go",s:"goes",past:"went",pp:"gone",ing:"going",future:"will go",perfect:"have/has gone",prog:"am/is/are going",ja:"行く"},
+{t:"verb",base:"come",s:"comes",past:"came",pp:"come",ing:"coming",future:"will come",perfect:"have/has come",prog:"am/is/are coming",ja:"来る"},
+{t:"verb",base:"see",s:"sees",past:"saw",pp:"seen",ing:"seeing",future:"will see",perfect:"have/has seen",prog:"am/is/are seeing",ja:"見る、会う"},
+{t:"verb",base:"eat",s:"eats",past:"ate",pp:"eaten",ing:"eating",future:"will eat",perfect:"have/has eaten",prog:"am/is/are eating",ja:"食べる"},
+{t:"verb",base:"drink",s:"drinks",past:"drank",pp:"drunk",ing:"drinking",future:"will drink",perfect:"have/has drunk",prog:"am/is/are drinking",ja:"飲む"},
+{t:"verb",base:"write",s:"writes",past:"wrote",pp:"written",ing:"writing",future:"will write",perfect:"have/has written",prog:"am/is/are writing",ja:"書く"},
+{t:"verb",base:"read",s:"reads",past:"read",pp:"read",ing:"reading",future:"will read",perfect:"have/has read",prog:"am/is/are reading",ja:"読む"},
+{t:"verb",base:"make",s:"makes",past:"made",pp:"made",ing:"making",future:"will make",perfect:"have/has made",prog:"am/is/are making",ja:"作る"},
+{t:"verb",base:"take",s:"takes",past:"took",pp:"taken",ing:"taking",future:"will take",perfect:"have/has taken",prog:"am/is/are taking",ja:"取る、連れていく"},
+{t:"verb",base:"give",s:"gives",past:"gave",pp:"given",ing:"giving",future:"will give",perfect:"have/has given",prog:"am/is/are giving",ja:"与える"},
+{t:"verb",base:"get",s:"gets",past:"got",pp:"got/gotten",ing:"getting",future:"will get",perfect:"have/has got",prog:"am/is/are getting",ja:"得る、手に入れる"},
+{t:"verb",base:"find",s:"finds",past:"found",pp:"found",ing:"finding",future:"will find",perfect:"have/has found",prog:"am/is/are finding",ja:"見つける"},
+{t:"verb",base:"know",s:"knows",past:"knew",pp:"known",ing:"knowing",future:"will know",perfect:"have/has known",prog:"am/is/are known",ja:"知っている"},
+{t:"verb",base:"think",s:"thinks",past:"thought",pp:"thought",ing:"thinking",future:"will think",perfect:"have/has thought",prog:"am/is/are thinking",ja:"考える、思う"},
+{t:"verb",base:"buy",s:"buys",past:"bought",pp:"bought",ing:"buying",future:"will buy",perfect:"have/has bought",prog:"am/is/are buying",ja:"買う"},
+{t:"verb",base:"bring",s:"brings",past:"brought",pp:"brought",ing:"bringing",future:"will bring",perfect:"have/has brought",prog:"am/is/are bringing",ja:"持ってくる"},
+{t:"verb",base:"teach",s:"teaches",past:"taught",pp:"taught",ing:"teaching",future:"will teach",perfect:"have/has taught",prog:"am/is/are teaching",ja:"教える"},
+{t:"verb",base:"speak",s:"speaks",past:"spoke",pp:"spoken",ing:"speaking",future:"will speak",perfect:"have/has spoken",prog:"am/is/are speaking",ja:"話す"},
+{t:"verb",base:"run",s:"runs",past:"ran",pp:"run",ing:"running",future:"will run",perfect:"have/has run",prog:"am/is/are running",ja:"走る"},
+{t:"verb",base:"sleep",s:"sleeps",past:"slept",pp:"slept",ing:"sleeping",future:"will sleep",perfect:"have/has slept",prog:"am/is/are sleeping",ja:"眠る"},
+{t:"verb",base:"begin",s:"begins",past:"began",pp:"begun",ing:"beginning",future:"will begin",perfect:"have/has begun",prog:"am/is/are beginning",ja:"始める、始まる"},
+{t:"verb",base:"choose",s:"chooses",past:"chose",pp:"chosen",ing:"choosing",future:"will choose",perfect:"have/has chosen",prog:"am/is/are choosing",ja:"選ぶ"},
+{t:"verb",base:"forget",s:"forgets",past:"forgot",pp:"forgotten",ing:"forgetting",future:"will forget",perfect:"have/has forgotten",prog:"am/is/are forgetting",ja:"忘れる"},
+{t:"verb",base:"leave",s:"leaves",past:"left",pp:"left",ing:"leaving",future:"will leave",perfect:"have/has left",prog:"am/is/are leaving",ja:"去る、出発する"},
+{t:"verb",base:"feel",s:"feels",past:"felt",pp:"felt",ing:"feeling",future:"will feel",perfect:"have/has felt",prog:"am/is/are feeling",ja:"感じる"},
+{t:"verb",base:"keep",s:"keeps",past:"kept",pp:"kept",ing:"keeping",future:"will keep",perfect:"have/has kept",prog:"am/is/are keeping",ja:"保つ"},
+{t:"verb",base:"put",s:"puts",past:"put",pp:"put",ing:"putting",future:"will put",perfect:"have/has put",prog:"am/is/are putting",ja:"置く"},
+{t:"verb",base:"study",s:"studies",past:"studied",pp:"studied",ing:"studying",future:"will study",perfect:"have/has studied",prog:"am/is/are studying",ja:"勉強する"},
+{t:"verb",base:"play",s:"plays",past:"played",pp:"played",ing:"playing",future:"will play",perfect:"have/has played",prog:"am/is/are playing",ja:"する、遊ぶ"},
+{t:"verb",base:"use",s:"uses",past:"used",pp:"used",ing:"using",future:"will use",perfect:"have/has used",prog:"am/is/are using",ja:"使う"},
+{t:"verb",base:"visit",s:"visits",past:"visited",pp:"visited",ing:"visiting",future:"will visit",perfect:"have/has visited",prog:"am/is/are visiting",ja:"訪れる"},
+{t:"verb",base:"stop",s:"stops",past:"stopped",pp:"stopped",ing:"stopping",future:"will stop",perfect:"have/has stopped",prog:"am/is/are stopping",ja:"止める、止まる"},
+{t:"verb",base:"open",s:"opens",past:"opened",pp:"opened",ing:"opening",future:"will open",perfect:"have/has opened",prog:"am/is/are opening",ja:"開ける、開く"},
+{t:"verb",base:"close",s:"closes",past:"closed",pp:"closed",ing:"closing",future:"will close",perfect:"have/has closed",prog:"am/is/are closing",ja:"閉める、閉まる"},
+{t:"verb",base:"help",s:"helps",past:"helped",pp:"helped",ing:"helping",future:"will help",perfect:"have/has helped",prog:"am/is/are helping",ja:"助ける"},
+{t:"verb",base:"call",s:"calls",past:"called",pp:"called",ing:"calling",future:"will call",perfect:"have/has called",prog:"am/is/are calling",ja:"呼ぶ、電話する"},
+{t:"verb",base:"look",s:"looks",past:"looked",pp:"looked",ing:"looking",future:"will look",perfect:"have/has looked",prog:"am/is/are looking",ja:"見る"},
+{t:"verb",base:"listen",s:"listens",past:"listened",pp:"listened",ing:"listening",future:"will listen",perfect:"have/has listened",prog:"am/is/are listening",ja:"聞く"},
+{t:"verb",base:"want",s:"wants",past:"wanted",pp:"wanted",ing:"wanting",future:"will want",perfect:"have/has wanted",prog:"am/is/are wanting",ja:"欲しい、望む"},
+{t:"verb",base:"like",s:"likes",past:"liked",pp:"liked",ing:"liking",future:"will like",perfect:"have/has liked",prog:"am/is/are liking",ja:"好む、好き"},
+{t:"verb",base:"love",s:"loves",past:"loved",pp:"loved",ing:"loving",future:"will love",perfect:"have/has loved",prog:"am/is/are loving",ja:"愛する、大好き"},
+{t:"verb",base:"live",s:"lives",past:"lived",pp:"lived",ing:"living",future:"will live",perfect:"have/has lived",prog:"am/is/are living",ja:"住む、生きる"},
+{t:"verb",base:"work",s:"works",past:"worked",pp:"worked",ing:"working",future:"will work",perfect:"have/has worked",prog:"am/is/are working",ja:"働く、取り組む"},
+{t:"verb",base:"walk",s:"walks",past:"walked",pp:"walked",ing:"walking",future:"will walk",perfect:"have/has walked",prog:"am/is/are walking",ja:"歩く"},
+{t:"verb",base:"talk",s:"talks",past:"talked",pp:"talked",ing:"talking",future:"will talk",perfect:"have/has talked",prog:"am/is/are talking",ja:"話す"},
+{t:"verb",base:"ask",s:"asks",past:"asked",pp:"asked",ing:"asking",future:"will ask",perfect:"have/has asked",prog:"am/is/are asking",ja:"尋ねる"},
+{t:"verb",base:"answer",s:"answers",past:"answered",pp:"answered",ing:"answering",future:"will answer",perfect:"have/has answered",prog:"am/is/are answering",ja:"答える"},
+{t:"verb",base:"start",s:"starts",past:"started",pp:"started",ing:"starting",future:"will start",perfect:"have/has started",prog:"am/is/are starting",ja:"始める"},
+{t:"verb",base:"finish",s:"finishes",past:"finished",pp:"finished",ing:"finishing",future:"will finish",perfect:"have/has finished",prog:"am/is/are finishing",ja:"終える"},
+{t:"verb",base:"move",s:"moves",past:"moved",pp:"moved",ing:"moving",future:"will move",perfect:"have/has moved",prog:"am/is/are moving",ja:"動く、動かす、引っ越す"},
+{t:"verb",base:"show",s:"shows",past:"showed",pp:"shown",ing:"showing",future:"will show",perfect:"have/has shown",prog:"am/is/are showing",ja:"見せる"},
+{t:"verb",base:"tell",s:"tells",past:"told",pp:"told",ing:"telling",future:"will tell",perfect:"have/has told",prog:"am/is/are telling",ja:"伝える、話す"},
+{t:"verb",base:"say",s:"says",past:"said",pp:"said",ing:"saying",future:"will say",perfect:"have/has said",prog:"am/is/are saying",ja:"言う"},
+{t:"verb",base:"hear",s:"hears",past:"heard",pp:"heard",ing:"hearing",future:"will hear",perfect:"have/has heard",prog:"am/is/are hearing",ja:"聞こえる、聞く"},
+{t:"verb",base:"meet",s:"meets",past:"met",pp:"met",ing:"meeting",future:"will meet",perfect:"have/has met",prog:"am/is/are meeting",ja:"会う"},
+{t:"verb",base:"send",s:"sends",past:"sent",pp:"sent",ing:"sending",future:"will send",perfect:"have/has sent",prog:"am/is/are sending",ja:"送る"},
+{t:"verb",base:"build",s:"builds",past:"built",pp:"built",ing:"building",future:"will build",perfect:"have/has built",prog:"am/is/are building",ja:"建てる"},
+{t:"verb",base:"break",s:"breaks",past:"broke",pp:"broken",ing:"breaking",future:"will break",perfect:"have/has broken",prog:"am/is/are breaking",ja:"壊す、壊れる"},
+{t:"verb",base:"drive",s:"drives",past:"drove",pp:"driven",ing:"driving",future:"will drive",perfect:"have/has driven",prog:"am/is/are driving",ja:"運転する"},
+{t:"verb",base:"ride",s:"rides",past:"rode",pp:"ridden",ing:"riding",future:"will ride",perfect:"have/has ridden",prog:"am/is/are riding",ja:"乗る"},
+{t:"verb",base:"fly",s:"flies",past:"flew",pp:"flown",ing:"flying",future:"will fly",perfect:"have/has flown",prog:"am/is/are flying",ja:"飛ぶ"},
+{t:"verb",base:"swim",s:"swims",past:"swam",pp:"swum",ing:"swimming",future:"will swim",perfect:"have/has swum",prog:"am/is/are swimming",ja:"泳ぐ"},
+{t:"verb",base:"sing",s:"sings",past:"sang",pp:"sung",ing:"singing",future:"will sing",perfect:"have/has sung",prog:"am/is/are singing",ja:"歌う"},
+{t:"verb",base:"win",s:"wins",past:"won",pp:"won",ing:"winning",future:"will win",perfect:"have/has won",prog:"am/is/are winning",ja:"勝つ"},
+{t:"verb",base:"lose",s:"loses",past:"lost",pp:"lost",ing:"losing",future:"will lose",perfect:"have/has lost",prog:"am/is/are losing",ja:"失う、負ける"},
+{t:"verb",base:"fall",s:"falls",past:"fell",pp:"fallen",ing:"falling",future:"will fall",perfect:"have/has fallen",prog:"am/is/are falling",ja:"落ちる"},
+{t:"verb",base:"grow",s:"grows",past:"grew",pp:"grown",ing:"growing",future:"will grow",perfect:"have/has grown",prog:"am/is/are growing",ja:"成長する、育つ"},
+{t:"verb",base:"become",s:"becomes",past:"became",pp:"become",ing:"becoming",future:"will become",perfect:"have/has become",prog:"am/is/are becoming",ja:"〜になる"},
+{t:"verb",base:"stand",s:"stands",past:"stood",pp:"stood",ing:"standing",future:"will stand",perfect:"have/has stood",prog:"am/is/are standing",ja:"立つ"},
+{t:"verb",base:"understand",s:"understands",past:"understood",pp:"understood",ing:"understanding",future:"will understand",perfect:"have/has understood",prog:"am/is/are understanding",ja:"理解する"},
+{t:"verb",base:"cut",s:"cuts",past:"cut",pp:"cut",ing:"cutting",future:"will cut",perfect:"have/has cut",prog:"am/is/are cutting",ja:"切る"},
+{t:"verb",base:"hold",s:"holds",past:"held",pp:"held",ing:"holding",future:"will hold",perfect:"have/has held",prog:"am/is/are holding",ja:"持つ、開催する"},
+{t:"verb",base:"pay",s:"pays",past:"paid",pp:"paid",ing:"paying",future:"will pay",perfect:"have/has paid",prog:"am/is/are paying",ja:"支払う"},
+{t:"verb",base:"spend",s:"spends",past:"spent",pp:"spent",ing:"spending",future:"will spend",perfect:"have/has spent",prog:"am/is/are spending",ja:"費やす、過ごす"},
+{t:"verb",base:"catch",s:"catches",past:"caught",pp:"caught",ing:"catching",future:"will catch",perfect:"have/has caught",prog:"am/is/are catching",ja:"捕まえる"},
+{t:"verb",base:"lend",s:"lends",past:"lent",pp:"lent",ing:"lending",future:"will lend",perfect:"have/has lent",prog:"am/is/are lending",ja:"貸す"},
+{t:"adj",base:"big",comp:"bigger",super:"biggest",ja:"大きい"},
+{t:"adj",base:"small",comp:"smaller",super:"smallest",ja:"小さい"},
+{t:"adj",base:"easy",comp:"easier",super:"easiest",ja:"簡単な"},
+{t:"adj",base:"happy",comp:"happier",super:"happiest",ja:"幸せな、うれしい"},
+{t:"adj",base:"busy",comp:"busier",super:"busiest",ja:"忙しい"},
+{t:"adj",base:"early",comp:"earlier",super:"earliest",ja:"早い"},
+{t:"adj",base:"hot",comp:"hotter",super:"hottest",ja:"暑い、熱い"},
+{t:"adj",base:"cold",comp:"colder",super:"coldest",ja:"寒い、冷たい"},
+{t:"adj",base:"long",comp:"longer",super:"longest",ja:"長い"},
+{t:"adj",base:"short",comp:"shorter",super:"shortest",ja:"短い、背が低い"},
+{t:"adj",base:"young",comp:"younger",super:"youngest",ja:"若い"},
+{t:"adj",base:"old",comp:"older",super:"oldest",ja:"古い、年を取った"},
+{t:"adj",base:"fast",comp:"faster",super:"fastest",ja:"速い"},
+{t:"adj",base:"slow",comp:"slower",super:"slowest",ja:"遅い"},
+{t:"adj",base:"beautiful",comp:"more beautiful",super:"most beautiful",ja:"美しい"},
+{t:"adj",base:"interesting",comp:"more interesting",super:"most interesting",ja:"興味深い"},
+{t:"adj",base:"important",comp:"more important",super:"most important",ja:"重要な"},
+{t:"adj",base:"famous",comp:"more famous",super:"most famous",ja:"有名な"},
+{t:"adj",base:"good",comp:"better",super:"best",ja:"よい"},
+{t:"adj",base:"bad",comp:"worse",super:"worst",ja:"悪い"},
+{t:"adj",base:"many/much",comp:"more",super:"most",ja:"多い"},
+{t:"adj",base:"little",comp:"less",super:"least",ja:"少ない"},
+{t:"noun",base:"book",plural:"books",ja:"本"},
+{t:"noun",base:"box",plural:"boxes",ja:"箱"},
+{t:"noun",base:"city",plural:"cities",ja:"都市"},
+{t:"noun",base:"baby",plural:"babies",ja:"赤ちゃん"},
+{t:"noun",base:"class",plural:"classes",ja:"クラス"},
+{t:"noun",base:"bus",plural:"buses",ja:"バス"},
+{t:"noun",base:"child",plural:"children",ja:"子ども"},
+{t:"noun",base:"person",plural:"people",ja:"人"},
+{t:"noun",base:"man",plural:"men",ja:"男性、人"},
+{t:"noun",base:"woman",plural:"women",ja:"女性、人"},
+{t:"noun",base:"foot",plural:"feet",ja:"足"},
+{t:"noun",base:"tooth",plural:"teeth",ja:"歯"},
+{t:"noun",base:"mouse",plural:"mice",ja:"ネズミ"},
+{t:"noun",base:"leaf",plural:"leaves",ja:"葉"},
+{t:"noun",base:"knife",plural:"knives",ja:"ナイフ"},
+{t:"noun",base:"life",plural:"lives",ja:"生活、命"},
+{t:"noun",base:"country",plural:"countries",ja:"国"},
+{t:"noun",base:"story",plural:"stories",ja:"物語"}
+];
+let currentForm=null;
+function startForms(){renderForms()}
+function renderForms(){
+ let tp=$("formType").value, arr=FORMS.filter(f=>tp==="all"||f.t===tp);
+ if($("formOrder").value==="weak") arr.sort((a,b)=>(learned["form|"+a.base]||0)-(learned["form|"+b.base]||0)); else arr=shuffle(arr);
+ currentForm=arr[0];
+ if(!currentForm)return;
+ let html="<div class='formcard'><div class='formtitle'>"+esc(currentForm.base)+"</div><div style='text-align:center;color:#746e83;margin-top:4px'>"+esc(currentForm.ja)+"</div>";
+ if(currentForm.t==="verb"){
+  const rows=[["原形",currentForm.base],["三単現",currentForm.s],["過去形",currentForm.past],["過去分詞",currentForm.pp],["ing形",currentForm.ing],["未来",currentForm.future],["現在完了",currentForm.perfect],["進行形",currentForm.prog]];
+  html+="<div class='formsgrid'>"+rows.map(x=>"<div class='formitem'><b>"+x[0]+"</b><span>"+esc(x[1])+"</span></div>").join("")+"</div>";
+ }else if(currentForm.t==="adj"){
+  html+="<div class='formsgrid'>"+[["原級",currentForm.base],["比較級",currentForm.comp],["最上級",currentForm.super]].map(x=>"<div class='formitem'><b>"+x[0]+"</b><span>"+esc(x[1])+"</span></div>").join("")+"</div>";
+ }else{
+  html+="<div class='formsgrid'>"+[["単数",currentForm.base],["複数",currentForm.plural]].map(x=>"<div class='formitem'><b>"+x[0]+"</b><span>"+esc(x[1])+"</span></div>").join("")+"</div>";
+ }
+ html+="<div class='actions'><button class='primary' id='formNext'>次の語 →</button><button class='good' id='formLearn'>覚えた ✓</button></div></div>";
+ $("formBody").innerHTML=html;
+ $("formNext").onclick=startForms;
+ $("formLearn").onclick=()=>{learned["form|"+currentForm.base]=Math.min(5,(learned["form|"+currentForm.base]||0)+1);localStorage.setItem("jhs_learned_v2",JSON.stringify(learned));startForms()};
+}
+$("formType").onchange=startForms;$("formOrder").onchange=startForms;
+
+// ===== 文法トレーニング =====
+const GRAMMAR=[
+{lv:1,t:"be",q:"I ___ a student.",o:["am","is","are","be"],a:0,e:"主語が I のbe動詞は am。"},
+{lv:1,t:"be",q:"She ___ from Japan.",o:["am","is","are","be"],a:1,e:"主語が she のbe動詞は is。"},
+{lv:1,t:"be",q:"They ___ happy.",o:["am","is","are","be"],a:2,e:"主語が they のbe動詞は are。"},
+{lv:1,t:"question",q:"___ you play tennis?",o:["Are","Do","Is","Does"],a:1,e:"一般動詞 play の疑問文は Do + 主語 + 動詞の原形。"},
+{lv:1,t:"question",q:"He ___ not like math.",o:["do","does","is","are"],a:1,e:"he は三人称単数なので does not + 動詞の原形。"},
+{lv:1,t:"question",q:"___ she like music?",o:["Do","Does","Is","Are"],a:1,e:"she なので Does + 主語 + 動詞の原形。"},
+{lv:1,t:"tense",q:"I ___ TV yesterday.",o:["watch","watches","watched","will watch"],a:2,e:"yesterday があるので過去形 watched。"},
+{lv:1,t:"tense",q:"I ___ visit Kyoto tomorrow.",o:["will","was","did","am"],a:0,e:"未来は will + 動詞の原形。"},
+{lv:1,t:"tense",q:"Look! The boy ___ now.",o:["runs","ran","is running","will run"],a:2,e:"now があり『〜している』なので現在進行形 is running。"},
+{lv:1,t:"modal",q:"You ___ study today.（〜しなければならない）",o:["can","must","may","will"],a:1,e:"義務を表す『〜しなければならない』は must。"},
+{lv:1,t:"modal",q:"___ I use your pen?（〜してもよいですか）",o:["May","Must","Did","Was"],a:0,e:"許可を求める May I ...? が使える。"},
+{lv:1,t:"sentence",q:"I ___ soccer every Sunday.",o:["play","plays","playing","played"],a:0,e:"I が主語の現在形では動詞は原形 play。"},
+{lv:2,t:"tense",q:"She ___ to school yesterday.",o:["go","goes","went","will go"],a:2,e:"過去の出来事なので went。"},
+{lv:2,t:"toing",q:"I want ___ a new book.",o:["read","to read","reading","reads"],a:1,e:"want to + 動詞の原形。"},
+{lv:2,t:"toing",q:"I enjoy ___ music.",o:["listen","to listen","listening to","listened"],a:2,e:"enjoy の後ろは動名詞。listen は listen to の形。"},
+{lv:2,t:"toing",q:"I went to the library ___ study.",o:["for","to","at","with"],a:1,e:"目的を表す不定詞 to study。"},
+{lv:2,t:"compare",q:"This bag is ___ than that one.",o:["big","bigger","biggest","more big"],a:1,e:"2つを比べる比較級なので bigger。"},
+{lv:2,t:"compare",q:"Mt. Fuji is ___ mountain in Japan.",o:["high","higher","the highest","highest"],a:2,e:"3つ以上の中で最も〜なので the highest。"},
+{lv:2,t:"passive",q:"English ___ in many countries.",o:["speaks","is spoken","spoken","is speaking"],a:1,e:"受動態は be + 過去分詞。"},
+{lv:2,t:"passive",q:"The window ___ by Ken yesterday.",o:["breaks","broke","was broken","is breaking"],a:2,e:"過去の受動態は was/were + 過去分詞。"},
+{lv:2,t:"conjunction",q:"I stayed home ___ it was raining.",o:["because","but","or","so"],a:0,e:"理由を表す接続詞 because。"},
+{lv:2,t:"conjunction",q:"I was tired, ___ I went to bed early.",o:["so","because","if","when"],a:0,e:"前半が原因、後半が結果なので so。"},
+{lv:2,t:"sentence",q:"My brother gave ___ a present.",o:["I","me","my","mine"],a:1,e:"give + 人 + 物 の『人』には目的格 me。"},
+{lv:3,t:"presentperfect",q:"I have ___ this movie three times.",o:["see","saw","seen","seeing"],a:2,e:"現在完了は have/has + 過去分詞。see の過去分詞は seen。"},
+{lv:3,t:"presentperfect",q:"Have you ever ___ to Kyoto?",o:["go","went","been","going"],a:2,e:"経験の現在完了。go の『行ったことがある』は have been to。"},
+{lv:3,t:"presentperfect",q:"I have lived here ___ three years.",o:["since","for","at","by"],a:1,e:"期間には for、起点には since を使う。"},
+{lv:3,t:"relative",q:"This is the book ___ I bought yesterday.",o:["who","which","where","when"],a:1,e:"先行詞が物 book なので which。"},
+{lv:3,t:"relative",q:"The girl ___ lives next door is my friend.",o:["which","who","where","when"],a:1,e:"先行詞が人 girl なので who。"},
+{lv:3,t:"toing",q:"I have something ___ you.",o:["tell","to tell","telling","told"],a:1,e:"something to + 動詞の原形。"},
+{lv:3,t:"conjunction",q:"I will call you when I ___ home.",o:["will get","get","got","getting"],a:1,e:"時を表す副詞節では、未来のことでも現在形を使う。"},
+{lv:3,t:"sentence",q:"I think ___ he is right.",o:["what","that","who","where"],a:1,e:"think の後ろに『〜だと思う』という節を続けるとき that が使える。"},
+{lv:3,t:"sentence",q:"The book was ___ by many students.",o:["read","reads","reading","to read"],a:0,e:"be動詞 + 過去分詞で受動態。read の過去分詞は read。"}
+];
+let grammarQ=null;
+function startGrammar(){renderGrammar()}
+function renderGrammar(){
+ const lv=$("grammarLevel").value,tp=$("grammarTopic").value;
+ let a=GRAMMAR.filter(x=>(lv==="all"||String(x.lv)===lv)&&(tp==="all"||x.t===tp));
+ if(!a.length)a=GRAMMAR;
+ grammarQ=a[Math.floor(Math.random()*a.length)];
+ $("grammarBody").innerHTML="<div class='grammarcard'><div class='small'>中"+grammarQ.lv+"・文法</div><div class='grammarq'>"+esc(grammarQ.q)+"</div><div class='choices'>"+grammarQ.o.map((x,i)=>"<button data-g='"+i+"'>"+esc(x)+"</button>").join("")+"</div><div id='grammarExplain'></div><div class='actions'><button class='primary' id='grammarNext'>次の問題 →</button></div></div>";
+ [...document.querySelectorAll("[data-g]")].forEach((b,i)=>b.onclick=()=>answerGrammar(b,i));
+ $("grammarNext").onclick=renderGrammar;
+}
+function answerGrammar(btn,i){
+ if(btn.disabled)return;
+ [...document.querySelectorAll("[data-g]")].forEach(b=>b.disabled=true);
+ if(i===grammarQ.a)btn.classList.add("correct");
+ else{btn.classList.add("wrong");document.querySelectorAll("[data-g]")[grammarQ.a].classList.add("correct")}
+ $("grammarExplain").innerHTML="<div class='explain'>"+esc(grammarQ.e)+"</div>";
+}
+
+// ===== 日本語→英語タイピング =====
+let typingQ=null;
+function startTyping(){renderTyping()}
+function renderTyping(){
+ const k=$("typingKind").value;
+ let a=all.filter(c=>k==="all"||c.kind===k);
+ if(!a.length){$("typingBody").innerHTML="<div class='typingcard'>問題がありません。</div>";return}
+ if($("typingOrder").value==="weak")a.sort((x,y)=>(learned["typing|"+x.en]||0)-(learned["typing|"+y.en]||0));else a=shuffle(a);
+ typingQ=a[0];
+ $("typingBody").innerHTML="<div class='typingcard'><div class='small' style='text-align:center'>この日本語を英語で入力</div><div class='typing-ja'>"+esc(typingQ.ja)+"</div><input id='typingInput' class='typing-input' autocomplete='off' autocapitalize='none' spellcheck='false' placeholder='英語を入力'><div class='actions'><button class='primary' id='typingCheck'>答え合わせ</button><button id='typingHint'>答えを見る</button></div><div id='typingResult'></div></div>";
+ $("typingCheck").onclick=checkTyping;
+ $("typingHint").onclick=()=>{$("typingResult").innerHTML="<div class='explain'>答え：<b>"+esc(typingQ.en)+"</b></div>"};
+ $("typingInput").addEventListener("keydown",e=>{if(e.key==="Enter")checkTyping()});
+ setTimeout(()=>$("typingInput")?.focus(),50);
+}
+function norm(s){return String(s).trim().toLowerCase().replace(/[’‘]/g,"'").replace(/\s+/g," ")}
+function checkTyping(){
+ const inp=$("typingInput");if(!inp||!typingQ)return;
+ const ok=norm(inp.value)===norm(typingQ.en),r=$("typingResult");
+ r.className="typing-result "+(ok?"ok":"ng");
+ r.innerHTML=ok?"正解！ 🎉":"不正解。正解は <b>"+esc(typingQ.en)+"</b>";
+ if(ok){learned["typing|"+typingQ.en]=Math.min(5,(learned["typing|"+typingQ.en]||0)+1);localStorage.setItem("jhs_learned_v2",JSON.stringify(learned))}
+ setTimeout(renderTyping,1000);
+}
+$("grammarLevel").onchange=startGrammar;$("grammarTopic").onchange=startGrammar;
+$("typingKind").onchange=startTyping;$("typingOrder").onchange=startTyping;
+
+function startTest(){
+ test={list:shuffle(all.filter(c=>c.kind==="word"||c.kind==="phrase")).slice(0,10),n:0,score:0,answered:false};
+ renderQuestion();
+}
+function renderQuestion(){
+ if(test.n>=test.list.length){$("testBody").innerHTML="<div class='result'><div>テスト終了！</div><div class='scorebig'>"+test.score+" / "+test.list.length*10+"</div><button class='primary' onclick='startTest()'>もう一度</button></div>";return}
+ const c=test.list[test.n];test.answered=false;$("testNo").textContent=(test.n+1)+" / "+test.list.length+"問";$("testScore").textContent=test.score+"点";
+ const opts=shuffle([c,...shuffle(all.filter(x=>x.en!==c.en)).slice(0,3)]);
+ $("testBody").innerHTML="<div class='q'>"+pic(c)+"<br>"+esc(c.en)+"<div class='hint'>意味はどれ？</div></div><div class='choices'>"+opts.map((o,j)=>"<button data-i='"+j+"'>"+esc(o.ja)+"</button>").join("")+"</div>";
+ [...document.querySelectorAll(".choices button")].forEach((b,j)=>b.onclick=()=>answer(b,opts[j],c));
+}
+function answer(btn,chosen,c){
+ if(test.answered)return;test.answered=true;
+ [...document.querySelectorAll(".choices button")].forEach(b=>b.disabled=true);
+ if(chosen.en===c.en){btn.classList.add("correct");test.score+=10;learned[key(c)]=Math.min(5,(learned[key(c)]||0)+1)}
+ else {btn.classList.add("wrong");[...document.querySelectorAll(".choices button")].find(b=>b.textContent===c.ja)?.classList.add("correct")}
+ localStorage.setItem("jhs_learned_v2",JSON.stringify(learned));
+ setTimeout(()=>{test.n++;renderQuestion()},700);
+}
+function analyzeWeakness(){
+ const cards=all;
+ const weak=cards.map(c=>({c,v:learned[key(c)]||0})).sort((a,b)=>a.v-b.v);
+ const unlearned=weak.filter(x=>x.v===0).length;
+ const low=weak.filter(x=>x.v<=1).length;
+ const phraseLow=cards.filter(c=>c.kind==="phrase"&&(learned[key(c)]||0)<=1).length;
+ const typingKeys=Object.keys(learned).filter(k=>k.startsWith("typing|"));
+ const typingWeak=cards.filter(c=>(learned["typing|"+c.en]||0)<=1).length;
+ const formWeak=FORMS.filter(f=>(learned["form|"+f.base]||0)<=1).length;
+ const tips=[];
+ if(unlearned>cards.length*.55) tips.push({title:"未学習の単語がまだ多め",body:"まずは1日10〜15枚だけ。『全部覚える』より、未学習→もう一回→覚えたの順で短時間を毎日続ける。"});
+ if(phraseLow>5) tips.push({title:"熟語・表現が弱点になりやすい",body:"熟語は単語単体ではなく、前置詞まで含めて1セットで音読。タイピングモードで日本語→英語も行う。"});
+ if(typingWeak>Math.max(10,Math.floor(cards.length*.5))) tips.push({title:"日本語→英語の取り出しが課題",body:"意味を見て3秒考えてから入力する練習を増やす。見て覚えるだけより、思い出す練習を入れる。"});
+ if(formWeak>Math.max(5,Math.floor(FORMS.length*.45))) tips.push({title:"語形変化を重点練習",body:"原形→三単現→過去形→過去分詞→ing形を声に出して1セット。特に不規則変化を優先する。"});
+ if(low>cards.length*.35) tips.push({title:"定着前のカードが多い",body:"『もう一回』になったカードを翌日に再出題。苦手優先を使うと復習対象を絞りやすい。"});
+ if(!tips.length) tips.push({title:"現在の学習バランスは安定",body:"次はランダムで復習し、タイピングと文法を交互に入れて『わかる→使える』へ進めよう。"});
+ return {tips,weak:weak.slice(0,8)};
+}
+function renderAI(){
+ const a=analyzeWeakness();
+ $("aiAnalysis").innerHTML=a.tips.map(x=>"<div class='aiItem'><b>"+esc(x.title)+"</b><span>"+esc(x.body)+"</span></div>").join("")+"<div style='margin-top:10px'><span class='pill'>未学習を優先</span><span class='pill'>苦手優先</span><span class='pill'>タイピング</span><span class='pill'>語形</span></div>";
+}
+// ===== 目標・クエストプランナー =====
+const GOAL_KEY="jhs_goal_v1", TASK_KEY="jhs_goal_tasks_v1";
+function localDate(d){const x=new Date(d);return x.toISOString().slice(0,10)}
+function todayStr(){return localDate(new Date())}
+function loadGoal(){try{return JSON.parse(localStorage.getItem(GOAL_KEY)||"null")}catch(e){return null}}
+function saveGoal(g){localStorage.setItem(GOAL_KEY,JSON.stringify(g))}
+function loadTasks(){try{return JSON.parse(localStorage.getItem(TASK_KEY)||"{}")}catch(e){return {}}}
+function saveTasks(t){localStorage.setItem(TASK_KEY,JSON.stringify(t))}
+function daysBetween(a,b){const A=new Date(a+"T00:00:00"),B=new Date(b+"T00:00:00");return Math.max(1,Math.ceil((B-A)/86400000)+1)}
+function masteredCount(){return all.filter(c=>(learned[key(c)]||0)>=3).length}
+function goalPlan(g){
+ const days=daysBetween(g.start,g.end), target=Math.min(Math.max(1,+g.target||1),all.length), current=masteredCount(), remain=Math.max(0,target-current);
+ const weak=analyzeWeakness().tips.map(x=>x.title).join(" ");
+ const dailyNew=Math.max(1,Math.ceil(remain/days));
+ const minutes=Math.max(5,+g.minutes||30);
+ const perDay=Math.max(5,Math.round(minutes/2));
+ const tasks=[];
+ for(let i=0;i<days;i++){
+   const date=new Date(g.start+"T00:00:00");date.setDate(date.getDate()+i);const ds=localDate(date);
+   const newN=Math.min(dailyNew,Math.max(0,target-current-i*dailyNew));
+   const review=Math.max(5,Math.round(newN*.7));
+   const task=[
+    {id:"study",name:"📖 暗記クエスト",desc:`新規 ${newN}枚＋復習 ${review}枚（苦手優先）`,xp:20},
+    {id:"forms",name:"🔤 語形クエスト",desc:`語形変化 ${Math.max(5,Math.min(12,Math.round(newN/2)+4))}語`,xp:15},
+    {id:"grammar",name:"📐 文法クエスト",desc:`文法 ${Math.max(3,Math.min(10,Math.round(minutes/10)+2))}問`,xp:15},
+    {id:"typing",name:"⌨️ タイピングクエスト",desc:`日本語→英語 ${Math.max(5,Math.min(15,Math.round(minutes/4)))}問`,xp:20},
+    {id:"test",name:"📝 ボステスト",desc:i%3===0?"10問テストを1回クリア":"ミニテストとして5問だけ挑戦",xp:i%3===0?30:15}
+   ];
+   tasks.push({date:ds,tasks:task});
+ }
+ return {days,target,current,remain,dailyNew,minutes,tasks,weak};
+}
+function generateGoal(){
+ let start=$("goalStart").value||todayStr(), end=$("goalDate").value;
+ if(!end){const d=new Date(start+"T00:00:00");d.setDate(d.getDate()+29);end=localDate(d)}
+ if(end<start){alert("目標日は開始日以降にしてください。");return}
+ const g={start,end,target:Math.max(1,+$("goalTarget").value||100),minutes:Math.max(5,+$("goalMinutes").value||30),memo:$("goalMemo").value||""};saveGoal(g);renderGoal();
+}
+function taskDoneKey(date,id){return date+"|"+id}
+function renderGoal(){
+ const g=loadGoal();
+ if(!g){
+  $("goalStart").value=todayStr();
+  const d=new Date();d.setDate(d.getDate()+29);$("goalDate").value=localDate(d);
+  $("goalTarget").value=Math.min(all.length,100);$("goalMinutes").value=30;
+  $("goalPlan").innerHTML="<div class='panel'><div class='small'>開始日・目標日・覚えたいカード数・1日の勉強時間を決めると、毎日のクエストを自動生成します。<br>現在の苦手傾向も参考にして、暗記だけに偏らないように配分します。</div></div>";
+  return;
+ }
+ $("goalStart").value=g.start;$("goalDate").value=g.end;$("goalTarget").value=g.target;$("goalMinutes").value=g.minutes;$("goalMemo").value=g.memo||"";
+ const p=goalPlan(g),tasks=loadTasks(),today=todayStr();
+ const flat=p.tasks.flatMap(x=>x.tasks.map(t=>({date:x.date,...t})));const done=flat.filter(t=>tasks[taskDoneKey(t.date,t.id)]).length;const total=flat.length;const pct=total?Math.round(done/total*100):0;const xp=flat.filter(t=>tasks[taskDoneKey(t.date,t.id)]).reduce((a,t)=>a+t.xp,0);
+ $("goalDone").textContent=pct+"%";$("goalDays").textContent=p.days+"日";$("goalXP").textContent=xp;$("goalMeta").textContent=`${g.start} → ${g.end}｜目標 ${p.target}枚｜現在の定着 ${p.current}枚${g.memo?"｜"+g.memo:""}`;
+ const near=p.tasks.filter(x=>x.date>=today).slice(0,7);
+ let html="<div class='panel'><span class='badge'>🎮 1日クエスト</span><div class='small' style='margin-top:7px'>1日あたり約"+p.minutes+"分。目標までに「覚える量」と「使う練習」を自動で分散します。</div><div class='goalProgress'><div style='width:"+pct+"%'></div></div></div>";
+ if(p.weak)html+="<div class='aiBox'><div class='aiTitle'>🤖 苦手傾向を反映した配分</div><div class='small'>"+esc(p.weak)+"。苦手が出た分野はクエスト内の復習・語形・タイピングで補強します。</div></div>";
+ html+="<div class='panel'><h2 style='margin:3px 0'>🗺️ これからのクエスト</h2>";
+ near.forEach(day=>{const isToday=day.date===today;const dd=new Date(day.date+"T00:00:00");const label=dd.toLocaleDateString("ja-JP",{month:"numeric",day:"numeric",weekday:"short"});html+=`<div class='milestone ${isToday?"today":""}'><b>${isToday?"🔥 今日のクエスト":"📅 "+label}</b><div class='taskList'>`;
+ day.tasks.forEach(t=>{const k=taskDoneKey(day.date,t.id),d=!!tasks[k];html+=`<div class='task ${d?"done":""}'><button class='taskCheck' data-task='${esc(k)}'>${d?"✓":"○"}</button><div class='taskMain'><div class='taskName'>${esc(t.name)}</div><div class='taskDesc'>${esc(t.desc)}</div><div class='xp'>+${t.xp} XP</div></div></div>`});html+="</div></div>"});
+ html+="</div>";
+ html+="<div class='panel'><h2 style='margin:3px 0'>📚 収録モード</h2><div class='modeList'><div class='modeItem'>📖 暗記：めくって意味・読み方・日本語訳・用例・例文・例文訳・参考・注意</div><div class='modeItem'>🔤 語形：原形・三単現・過去形・過去分詞・ing・未来・完了・進行・比較・複数形</div><div class='modeItem'>📐 文法：中1〜中3の主要文法</div><div class='modeItem'>⌨️ タイピング：日本語→英語</div><div class='modeItem'>📝 テスト：4択テスト</div><div class='modeItem'>🤖 AI学習分析：苦手傾向＋対策</div><div class='modeItem'>📊 進捗：学習状況を保存</div><div class='modeItem'>🎯 目標：期限までのクエスト自動生成</div></div></div>";
+ $("goalPlan").innerHTML=html;
+ document.querySelectorAll("[data-task]").forEach(b=>b.onclick=()=>{const k=b.dataset.task,t=loadTasks();if(t[k])delete t[k];else t[k]=Date.now();saveTasks(t);renderGoal()});
+}
+$("generateGoal").onclick=generateGoal;
+
+function showProgress(){
+ const total=all.length, done=Object.keys(learned).length;
+ $("progressBody").innerHTML="<p>収録カード：<b>"+total+"+</b></p><p>覚えたカード：<b>"+done+"</b></p><p>語形トレーニング：<b>"+FORMS.length+"語</b></p><p>文法問題：<b>"+GRAMMAR.length+"問</b></p><p>日本語→英語タイピング：<b>収録カードを出題</b></p><p>進捗率：<b>"+(total?Math.min(100,Math.round(done/total*100)):0)+"%</b></p><button class='bad' id='resetProgress'>進捗をリセット</button>";
+ $("resetProgress").onclick=()=>{if(confirm("進捗をリセットしますか？")){learned={};localStorage.removeItem("jhs_learned_v2");showProgress();render()}};
+ $("runAI").onclick=renderAI;
+ renderAI();
+}
+
+async function loadRemote(){
+ // Online mode: add a broad open English-Japanese core vocabulary layer.
+ // If the network is unavailable, the built-in set continues to work.
+ try{
+   const lv=await fetch(REMOTE_LEVEL).then(r=>r.text());
+   const words=new Set();
+   lv.split(/\r?\n/).forEach(line=>{const m=line.match(/^([^=]+)=([123])$/);if(m)words.add(m[1].trim().toLowerCase())});
+   const letters=[..."abcdefghijklmnopqrstuvwxyz"];
+   const fetched=await Promise.all(letters.map(async l=>{
+     try{return await fetch(REMOTE_BASE+l+".txt").then(r=>r.text())}catch(e){return ""}
+   }));
+   let extra=[];
+   fetched.forEach(txt=>txt.split(/\r?\n/).forEach(line=>{
+     const [en,ja]=line.split("\t"); if(!en||!ja)return;
+     const w=en.trim().toLowerCase();
+     if(words.has(w) && /^[a-z][a-z' -]{1,28}$/i.test(en.trim())){
+       extra.push({grade:"all",kind:en.trim().includes(" ")?"phrase":"word",en:en.trim(),ja:ja.split(/[;／]/)[0].trim(),reading:""});
+     }
+   }));
+   const seen=new Set(all.map(c=>c.en.toLowerCase()));
+   extra=extra.filter(c=>{const k=c.en.toLowerCase();if(seen.has(k))return false;seen.add(k);return true});
+   all=all.concat(extra);
+   rebuild();
+   console.log("online vocabulary loaded",extra.length);
+ }catch(e){console.log("offline fallback")}
+}
+rebuild();loadRemote();
+</script>
+</body></html>
